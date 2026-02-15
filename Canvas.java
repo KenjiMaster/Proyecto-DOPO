@@ -98,6 +98,13 @@ public class Canvas{
         shapes.put(referenceObject, new ShapeDescription(shape, color));
         redraw();
     }
+
+    public void draw(Object referenceObject, Color color, Shape shape){
+        objects.remove(referenceObject);
+        objects.add(referenceObject);
+        shapes.put(referenceObject, new ShapeDescription(shape, color));
+        redraw();
+    }
  
     /**
      * Erase a given shape's from the screen.
@@ -188,14 +195,27 @@ public class Canvas{
     private class ShapeDescription{
         private Shape shape;
         private String colorString;
+        private Color color;
+        private boolean useColor;
 
         public ShapeDescription(Shape shape, String color){
             this.shape = shape;
             colorString = color;
+            useColor = false;
+        }
+        
+        public ShapeDescription(Shape shape, Color color) {
+            this.shape = shape;
+            this.color = color;
+            useColor = true;
         }
 
         public void draw(Graphics2D graphic){
-            setForegroundColor(colorString);
+            if(useColor){
+                graphic.setColor(color);
+            }else{
+                setForegroundColor(colorString);
+            }
             graphic.draw(shape);
             graphic.fill(shape);
         }

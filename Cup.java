@@ -1,4 +1,5 @@
 import java.util.*;
+import java.awt.*;
 /**
  * Write a description of class Cup here.
  * 
@@ -9,20 +10,50 @@ public class Cup extends Item{
     private static Map<Integer,Integer> usedNumbers = new HashMap<>();
     private Lid lid;
     private boolean isCovered;
+    private Rectangle cup;
+    private Rectangle empty; 
     
-    public Cup(int i, int index){
+    public Cup(int i, int index, Tower tower){
         if(!usedNumbers.containsKey(i)){
             this.setNumber(i);
             usedNumbers.put(i,index);
             this.setHeight(2*i - 1);
             this.makeInvisible();
             isCovered = false;
+            createShapeCup(tower.height(),Tower.width,Tower.maxHeight);
         }
+    }
+    
+    public void createShapeCup(int height,int width,int maxHeight){
+        cup = new Rectangle();
+        cup.changeColor(this.makeColor(this.getNumber()));
+        cup.changeSize(this.getHeight()*10,this.getHeight()*10);
+        empty = new Rectangle();
+        empty.changeColor(Color.white);
+        empty.changeSize((this.getHeight()*10)-10,(this.getHeight()*10)-20);
+        int floor = maxHeight - height*10;
+        int vertical = width/2;
+        int xPosition = vertical-(this.getHeight()*5);
+        int yPosition = floor - this.getHeight()*10;
+        cup.setPosition(xPosition,yPosition);
+        empty.setPosition(xPosition+10,yPosition);
+    }
+    
+    public void makeVisibleShape(){
+        cup.makeVisible();
+        empty.makeVisible();
+        this.makeVisible();
+    }
+    
+    public void makeInvisibleShape(){
+        cup.makeInvisible();
+        empty.makeInvisible();
+        this.makeInvisible();
     }
     
     public void remove(){
         usedNumbers.remove((Integer) this.getNumber());
-        this.makeInvisible();
+        this.makeInvisibleShape();
         if(isCovered){
             lid.remove();
             lid = null;

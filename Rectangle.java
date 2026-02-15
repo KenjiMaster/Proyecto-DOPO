@@ -17,7 +17,7 @@ public class Rectangle{
     private int width;
     private int xPosition;
     private int yPosition;
-    private String color;
+    private Color color;
     private boolean isVisible;
 
     /**
@@ -28,7 +28,7 @@ public class Rectangle{
         width = 40;
         xPosition = 70;
         yPosition = 15;
-        color = "magenta";
+        color = Color.getHSBColor(0.618044f,0.7f,0.9f);;
         isVisible = false;
     }
     
@@ -154,7 +154,7 @@ public class Rectangle{
      * @param color the new color. Valid colors are "red", "yellow", "blue", "green",
      * "magenta" and "black".
      */
-    public void changeColor(String newColor){
+    public void changeColor(Color newColor){
         color = newColor;
         draw();
     }
@@ -181,6 +181,11 @@ public class Rectangle{
             Canvas canvas = Canvas.getCanvas(Tower.width,Tower.maxHeight);
             canvas.erase(this);
         }
+    }
+    
+    public void setPosition(int xPosition,int yPosition){
+        this.xPosition = xPosition;
+        this.yPosition = yPosition;
     }
 }
 

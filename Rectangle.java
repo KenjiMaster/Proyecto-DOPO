@@ -165,7 +165,7 @@ public class Rectangle{
 
     private void draw() {
         if(isVisible) {
-            Canvas canvas = Canvas.getCanvas();
+            Canvas canvas = Canvas.getCanvas(Tower.width,Tower.maxHeight);
             canvas.draw(this, color,
                 new java.awt.Rectangle(xPosition, yPosition, 
                                        width, height));
@@ -178,7 +178,7 @@ public class Rectangle{
      */
     private void erase(){
         if(isVisible) {
-            Canvas canvas = Canvas.getCanvas();
+            Canvas canvas = Canvas.getCanvas(Tower.width,Tower.maxHeight);
             canvas.erase(this);
         }
     }

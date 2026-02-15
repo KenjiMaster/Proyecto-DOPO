@@ -1,0 +1,20 @@
+#BlueJ class context
+comment0.target=Cup
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Cup\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=i\ index
+comment1.target=Cup(int,\ int)
+comment2.params=
+comment2.target=void\ remove()
+comment3.params=i
+comment3.target=int\ getIndex(int)
+comment4.params=i
+comment4.target=boolean\ containCup(int)
+comment5.params=lid
+comment5.target=void\ makeConvered(Lid)
+comment6.params=
+comment6.target=void\ makeInconvered()
+comment7.params=
+comment7.target=Lid\ getLid()
+comment8.params=
+comment8.target=boolean\ isConvered()
+numComments=9

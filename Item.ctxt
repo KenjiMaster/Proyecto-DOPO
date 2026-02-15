@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.target=Item
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Item\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=
+comment1.target=void\ makeInvisible()
+comment2.params=
+comment2.target=void\ makeVisible()
+comment3.params=height
+comment3.target=void\ setHeight(int)
+comment4.params=
+comment4.target=int\ getHeight()
+comment5.params=number
+comment5.target=void\ setNumber(int)
+comment6.params=
+comment6.target=int\ getNumber()
+numComments=7

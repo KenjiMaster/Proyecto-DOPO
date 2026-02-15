@@ -55,22 +55,30 @@ public class Tower{
                 removeLid(cup.getNumber());
             }
             items.remove(cup);
-            indexLastCups.remove(indexLastCups.size()-1);
+            indexLastCups.remove((Integer) cup.getNumber());
             cup.remove();
             if(isVisible){
                 makeInvisible();
                 isVisible = true;
             }
+            indexLastCups.clear();
+            indexLastLids.clear();
             height = 0;
+            int i = 0;
             for (Item item : items) {
                 if (item instanceof Cup) {
                     cup = (Cup) item;
+                    Cup.setIndex(cup.getNumber(),i);
+                    indexLastCups.add(i);
                     cup.createShapeCup(height,width,maxHeight);
                 } else if (item instanceof Lid) {
                     Lid lid = (Lid) item;
+                    Lid.setIndex(lid.getNumber(),i);
+                    indexLastLids.add(i);
                     lid.createShapeLid(height,width,maxHeight);
                 }
                 height += item.getHeight();
+                i++;
             }
             if(isVisible){
                 makeVisible();
@@ -86,22 +94,30 @@ public class Tower{
                     removeLid(cup.getNumber());
                 }
                 items.remove(cup);
-                indexLastCups.remove(indexLastCups.size()-1);
+                indexLastCups.remove((Integer)cup.getNumber());
                 cup.remove();
                 if(isVisible){
                     makeInvisible();
                     isVisible = true;
                 }
+                indexLastCups.clear();
+                indexLastLids.clear();
                 height = 0;
+                int in = 0;
                 for (Item item : items) {
                     if (item instanceof Cup) {
                         cup = (Cup) item;
+                        Cup.setIndex(cup.getNumber(),in);
+                        indexLastCups.add(in);
                         cup.createShapeCup(height,width,maxHeight);
                     } else if (item instanceof Lid) {
                         Lid lid = (Lid) item;
+                        Lid.setIndex(lid.getNumber(),in);
+                        indexLastLids.add(in);
                         lid.createShapeLid(height,width,maxHeight);
                     }
                     height += item.getHeight();
+                    in++;
                 }
                 if(isVisible){
                     makeVisible();
@@ -137,22 +153,30 @@ public class Tower{
             Lid lid = (Lid)items.get(indexLastLids.get(indexLastLids.size()-1));
             height -= lid.getHeight();
             items.remove(lid);
-            indexLastLids.remove(indexLastLids.size()-1);
+            indexLastLids.remove((Integer) lid.getNumber());
             lid.remove();
             if(isVisible){
                     makeInvisible();
                     isVisible = true;
                 }
+            indexLastCups.clear();
+            indexLastLids.clear();
             height = 0;
+            int i = 0;
             for (Item item : items) {
                 if (item instanceof Cup) {
                     Cup cup = (Cup) item;
+                    Cup.setIndex(cup.getNumber(),i);
+                    indexLastCups.add(i);
                     cup.createShapeCup(height,width,maxHeight);
                 } else if (item instanceof Lid) {
                     lid = (Lid) item;
+                    Lid.setIndex(lid.getNumber(),i);
+                    indexLastLids.add(i);
                     lid.createShapeLid(height,width,maxHeight);
                 }
                 height += item.getHeight();
+                i++;
             }
             if(isVisible){
                 makeVisible();
@@ -165,22 +189,30 @@ public class Tower{
             Lid lid = (Lid) items.get(Lid.getIndex(i));
             height -= lid.getHeight();
             items.remove(lid);
-            indexLastLids.remove(indexLastLids.size()-1);
+            indexLastLids.remove((Integer) lid.getNumber());
             lid.remove();
             if(isVisible){
                     makeInvisible();
                     isVisible = true;
-                }
+            }
+            indexLastCups.clear();
+            indexLastLids.clear();
             height = 0;
+            int in = 0;
             for (Item item : items) {
                 if (item instanceof Cup) {
                     Cup cup = (Cup) item;
+                    Cup.setIndex(cup.getNumber(),in);
+                    indexLastCups.add(in);
                     cup.createShapeCup(height,width,maxHeight);
                 } else if (item instanceof Lid) {
                     lid = (Lid) item;
+                    Lid.setIndex(lid.getNumber(),in);
+                    indexLastLids.add(in);
                     lid.createShapeLid(height,width,maxHeight);
                 }
                 height += item.getHeight();
+                in++;
             }
             if(isVisible){
                 makeVisible();
@@ -222,5 +254,122 @@ public class Tower{
             rectangle.makeInvisible();
         }
         isVisible = false;
+    }
+    
+    public void orderTower(){
+        Collections.sort(items, (a, b) -> {
+        if (a.getNumber() != b.getNumber()) {
+            return b.getNumber() - a.getNumber();
+        }
+        if (a instanceof Cup) return -1;
+        return 1;
+        });
+        if(isVisible){
+            makeInvisible();
+            isVisible = true;
+        }
+        indexLastCups.clear();
+        indexLastLids.clear();
+        height = 0;
+        int i = 0;
+        int last = -1;
+        Item lastItem = null;
+        for (Item item : items) {
+            if (item instanceof Cup) {
+                Cup cup = (Cup) item;
+                Cup.setIndex(cup.getNumber(),i);
+                indexLastCups.add(i);
+                last = cup.getNumber();
+                cup.createShapeCup(height,width,maxHeight);
+            } else if (item instanceof Lid) {
+                Lid lid = (Lid) item;
+                Lid.setIndex(lid.getNumber(),i);
+                indexLastLids.add(i);
+                lid.createShapeLid(height,width,maxHeight);
+                if(last == lid.getNumber()){
+                    Cup cup = (Cup) lastItem;
+                    cup.makeConvered(lid);
+                }
+                last = -1;
+            }
+            i++;
+            height += item.getHeight();
+            lastItem = item;
+        }
+        if(isVisible){
+            makeVisible();
+        }
+    }
+    
+    public void reverseTower(){
+        Collections.reverse(items);
+        if(isVisible){
+            makeInvisible();
+            isVisible = true;
+        }
+        indexLastCups.clear();
+        indexLastLids.clear();
+        height = 0;
+        int i = 0;
+        int last = -1;
+        Item lastItem = null;
+        for (Item item : items) {
+            if (item instanceof Cup) {
+                Cup cup = (Cup) item;
+                Cup.setIndex(cup.getNumber(),i);
+                indexLastCups.add(i);
+                last = cup.getNumber();
+                cup.createShapeCup(height,width,maxHeight);
+            } else if (item instanceof Lid) {
+                Lid lid = (Lid) item;
+                Lid.setIndex(lid.getNumber(),i);
+                indexLastLids.add(i);
+                lid.createShapeLid(height,width,maxHeight);
+                if(last == lid.getNumber()){
+                    Cup cup = (Cup) lastItem;
+                    cup.makeConvered(lid);
+                }
+                last = -1;
+            }
+            i++;
+            height += item.getHeight();
+            lastItem = item;
+        }
+        if(isVisible){
+            makeVisible();
+        }
+    }
+    public int[] lidedCups(){
+        int countLidedCups = 0;
+        List<Integer> listLidedCups = new ArrayList<>();
+        for(Item item : items){
+            if(item instanceof Cup){
+                Cup cup = (Cup) item;
+                if(cup.isConvered()){
+                   countLidedCups++;
+                    listLidedCups.add(item.getNumber()); 
+                }
+            }
+        }
+        int[] resLidedCups = new int[countLidedCups];
+        Collections.sort(listLidedCups);
+        for(int i=0;i<countLidedCups;i++){
+            resLidedCups[i] = listLidedCups.get(i);
+        }
+        return resLidedCups;
+    }
+    public String[][] stackingItems(){
+        String[][] resStackingItems = new String[items.size()][2];
+        for(int i=0;i<items.size();i++){
+            Item item = items.get(i);
+            if(item instanceof Cup){
+                resStackingItems[i][0] = "cup";
+                resStackingItems[i][1] = String.valueOf(item.getNumber());
+            }else{
+                resStackingItems[i][0] = "lid";
+                resStackingItems[i][1] = String.valueOf(item.getNumber());
+            }
+        }
+        return resStackingItems;
     }
 }

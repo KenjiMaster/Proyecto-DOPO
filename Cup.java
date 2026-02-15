@@ -64,6 +64,10 @@ public class Cup extends Item{
         return usedNumbers.get(i);
     }
     
+    public static void setIndex(int i,int index){
+        usedNumbers.put(i,index);
+    }
+    
     public static boolean containCup(int i){
         return usedNumbers.containsKey((Integer)i);
     }

@@ -15,4 +15,6 @@ comment6.params=
 comment6.target=void\ popLid()
 comment7.params=i
 comment7.target=void\ removeLid(int)
-numComments=8
+comment8.params=
+comment8.target=int\ height()
+numComments=9

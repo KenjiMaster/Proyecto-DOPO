@@ -26,7 +26,7 @@ public class Canvas{
      */
     public static Canvas getCanvas(int width, int height){
         if(canvasSingleton == null) {
-            canvasSingleton = new Canvas("BlueJ Shapes Demo", width, height, 
+            canvasSingleton = new Canvas("StackingItems", width, height, 
                                          Color.white);
         }
         canvasSingleton.setVisible(true);
@@ -98,7 +98,13 @@ public class Canvas{
         shapes.put(referenceObject, new ShapeDescription(shape, color));
         redraw();
     }
-
+    
+    /**
+     * Draw a given shape onto the canvas.
+     * @param  referenceObject  an object to define identity for this shape
+     * @param  color            the color of the shape
+     * @param  shape            the shape object to be drawn on the canvas
+     */
     public void draw(Object referenceObject, Color color, Shape shape){
         objects.remove(referenceObject);
         objects.add(referenceObject);

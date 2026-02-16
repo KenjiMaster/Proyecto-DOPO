@@ -183,6 +183,11 @@ public class Rectangle{
         }
     }
     
+    /**
+     * Asignar posicion xy.
+     * @param  xPosition posicion en x
+     * @param  yPosition posicion en y
+     */
     public void setPosition(int xPosition,int yPosition){
         this.xPosition = xPosition;
         this.yPosition = yPosition;

@@ -24,6 +24,7 @@ comment15.target=void\ erase()
 comment15.text=\r\n\ Erase\ the\ rectangle\ on\ screen.\r\n
 comment16.params=xPosition\ yPosition
 comment16.target=void\ setPosition(int,\ int)
+comment16.text=\r\n\ Asignar\ posicion\ xy.\r\n\ @param\ \ xPosition\ posicion\ en\ x\r\n\ @param\ \ yPosition\ posicion\ en\ y\r\n
 comment2.params=
 comment2.target=void\ makeVisible()
 comment2.text=\r\n\ Make\ this\ rectangle\ visible.\ If\ it\ was\ already\ visible,\ do\ nothing.\r\n

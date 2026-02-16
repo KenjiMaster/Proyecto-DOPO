@@ -1,0 +1,30 @@
+1. ¿Cuáles fueron los mini-ciclos definidos? Justifíquenlos.
+	-Mini-Ciclo 1: Hacer que la torre exista y poder agregar y quitar tazas y tapas, únicamente la lógica detrás de estos métodos.
+	-Mini-Ciclo 2: Ver la torre y tener la representación de Cups y Lids, ajustar los métodos previamente hechos.
+	-Mini-Ciclo 3: Implementaciones de ordenamiento e información, ajustar el intercambio de ítems y su información.
+	-Mini-Ciclo 4: Implementación de estado de operaciones junto con los carteles JOptionPane, detalles finales de visibilidad además de la documentación junto con los modelos de astah.
+
+2. ¿Cuál es el estado actual del proyecto en términos de mini-ciclos? ¿por qué?
+	-Todos lo mini-ciclos han sido completados satisfactoriamente, ya que el trabajo tuvo una buena distribución de ciclos además de un buen manejo del tiempo que nos permitió llegar al final de lo pronosticado.
+
+3. ¿Cuál fue el tiempo total invertido por cada uno de ustedes? (Horas/Hombre)
+	-(20/Jose Daniel Garcia Pineda)(17/Jhonatan Stiven Peña Mora)
+
+4. ¿Cuál consideran fue el mayor logro? ¿Por qué?
+	-Hacer que visualmente los ítems se comportaran bien, ya que a nuestros ojos era uno de los retos mas grandes del proyecto.
+
+5. ¿Cuál consideran que fue el mayor problema técnico? ¿Qué hicieron para resolverlo?
+	-La organización de la torre ya que traía consigo bastantes cambios al código como la alteración de las posiciones, lo que hicimos para resolverlo fue hacer una especie de redibujado donde volvíamos a asigna las posiciones de cada item.
+
+6. ¿Qué hicieron bien como equipo? ¿Qué se comprometen a hacer para mejorar los resultados?
+	-La distribución de ciclos y un desarrollo ágil, nos comprometemos a usar de una mejor manera los tiempos ya que fue en algo que no nos fijamos y nos toco ser bastante precisos a la hora del desarrollo.
+
+7. Considerando las prácticas XP incluidas en los laboratorios. ¿cuál fue la más útil? ¿por qué?
+	-La mas útil fue Pair Programing ya que es una forma muy buena de hacer un trabajo en duos, además de ser muy útil a la hora de detectar errores.
+
+8. ¿Qué referencias usaron? ¿Cuál fue la más útil? Incluyan citas con estándares adecuados.
+	-La referencia que usamos y fue la mas útil fue la de la api de java ya que este proyecto incluyo bastentes detalles de programcion a los que no estamos acostumbramos.
+
+Bibliografía:
+
+Java Platform SE 8. (2025b, octubre 20). https://docs.oracle.com/javase/8/docs/api/

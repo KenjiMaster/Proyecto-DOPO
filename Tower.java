@@ -26,12 +26,55 @@ public class Tower{
      * Obtener Tower singleton.
      * @param  width ancho del canvas
      * @param  height alto del canvas
+     * @return objeto torre
      */
     public static Tower getTower(int width, int height){
         if(towerSingleton == null) {
             towerSingleton = new Tower(width, height);
         }
         return towerSingleton;
+    }
+    
+    /**
+     * Obtener Tower singleton.
+     * @param  width ancho del canvas
+     * @param  height alto del canvas
+     * @param  cups cantidad de copas iniciales
+     * @return objeto torre
+     */
+    public static Tower getTower(int width, int height, int cups){
+        if(towerSingleton == null) {
+            towerSingleton = new Tower(width, height, cups);
+        }
+        return towerSingleton;
+    }
+    
+    /**
+     * Constructor de Tower.
+     * @param  width ancho del canvas
+     * @param  height alto del canvas
+     * @param  cups cantidad de copas iniciales
+     */
+    private Tower(int width, int maxHeight, int cups){
+        this.width = width;
+        this.maxHeight = maxHeight;
+        canvas = Canvas.getCanvas(width,maxHeight);
+        canvas.setVisible(false);
+        items = new ArrayList<>();
+        indexLastCups = new ArrayList<>();
+        indexLastLids = new ArrayList<>();
+        isVisible = false;
+        canvasOperation = false;
+        lastOperation = true;
+        marks = new ArrayList<>();
+        for(int i=0;i<maxHeight;i+=10){
+            Rectangle rectangle = new Rectangle();
+            rectangle.changeColor(Color.black);
+            rectangle.setPosition(0,i);
+            rectangle.changeSize(1,10);
+            marks.add(rectangle);
+        }
+        for(int i=1; i<=cups; i++) pushCup(i);
     }
     
     /**
@@ -192,6 +235,7 @@ public class Tower{
     
     /**
      * Obtener altura actual de la torre.
+     * @return numero de altura de la torre
      */
     public int height(){
         return height;
@@ -269,6 +313,9 @@ public class Tower{
         lastOperation = true;
     }
     
+    /**
+     * Redibujado de la torre.
+     */
     private void redraw(){
         if(isVisible){
             canvasOperation = true;
@@ -311,6 +358,7 @@ public class Tower{
     
     /**
      * Numeros de las Cups tapadas ordenadas de menor a mayor.
+     * @return arreglo de los numeros de las tazas tapadas.
      */
     public int[] lidedCups(){
         int countLidedCups = 0;
@@ -335,6 +383,7 @@ public class Tower{
     
     /**
      * Matriz de Items con su tipo y numero, desde la base a la punta.
+     * @param matriz con los Items
      */
     public String[][] stackingItems(){
         String[][] resStackingItems = new String[items.size()][2];
@@ -353,7 +402,36 @@ public class Tower{
     }
     
     /**
+     * Intercambio de items de la torre.
+     * @param o1 item 1
+     * @param o2 item 2
+     */
+    public void swap(String[] o1, String[] o2){
+        int indexItem1 = findIndexItem(o1[0],o1[1]);
+        int indexItem2 = findIndexItem(o2[0],o2[1]);
+        Item item1 = items.get(indexItem1);
+        Item item2 = items.get(indexItem2);
+        items.set(indexItem1,item2);
+        items.set(indexItem2,item1);
+        redraw();
+    }
+    
+    /**
+     * Encontrar el indice de un item en la torre.
+     * @param type tipo de item cup/lid
+     * @param number numero del item
+     */
+    private int findIndexItem(String type, String number){
+        if(type.equals("cup")){
+            return Cup.getIndex(Integer.valueOf(number));
+        }else{
+            return Lid.getIndex(Integer.valueOf(number));
+        }
+    }
+    
+    /**
      * Obtener estado de la ultima operacion.
+     * @return valor booleano de la ultima operacion
      */
     public boolean ok(){
         return lastOperation;

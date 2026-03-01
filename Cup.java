@@ -85,6 +85,7 @@ public class Cup extends Item{
     /**
      * Obtener indice de torre de la Cup i.
      * @param  i numero
+     * @return numero de indice
      */
     public static int getIndex(int i){
         return usedNumbers.get(i);
@@ -102,6 +103,7 @@ public class Cup extends Item{
     /**
      * Mirar contenencia de la Cup i.
      * @param  i numero 
+     * @return valor booleano de contenencia
      */
     public static boolean containCup(int i){
         return usedNumbers.containsKey((Integer)i);
@@ -126,6 +128,7 @@ public class Cup extends Item{
     
     /**
      * Mirar si la Cup esta tapada.
+     * @return valor booleano de covertura
      */
     public boolean isConvered(){
         return this.isCovered;

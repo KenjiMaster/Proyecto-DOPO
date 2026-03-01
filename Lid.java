@@ -66,6 +66,10 @@ public class Lid extends Item{
         lid.setPosition(xPosition,yPosition);
     }
     
+    /**
+     * Obtener el ancho de la tapa.
+     * @return numero del ancho
+     */
     public int getWidth(){
         return width;
     }
@@ -102,6 +106,7 @@ public class Lid extends Item{
     /**
      * Obtener indice de torre de la Lid i.
      * @param  i numero
+     * @return numero de indice
      */
     public static int getIndex(int i){
         return usedNumbers.get(i);
@@ -119,6 +124,7 @@ public class Lid extends Item{
     /**
      * Mirar contenencia de la Lid i.
      * @param  i numero 
+     * @return valor booleano de contenencia
      */
     public static boolean containLid(int i){
         return usedNumbers.containsKey((Integer)i);

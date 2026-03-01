@@ -15,6 +15,7 @@ public class Item{
     /**
      * Generador de color mediante proporcion aurea.
      * @param  number numero 
+     * @return color
      */
     public Color makeColor(int number){
         float hue = (number*0.618033f)%1.0f;
@@ -46,6 +47,7 @@ public class Item{
     
     /**
      * Obtener altura.
+     * @return numero con la altura del item
      */
     public int getHeight(){
         return height;
@@ -61,6 +63,7 @@ public class Item{
     
     /**
      * Obtener numero.
+     * @return numero i
      */
     public int getNumber(){
         return number;

@@ -122,6 +122,7 @@ public class Cup extends Item{
      */
     public void makeConvered(Lid lid){
         this.lid = lid;
+        empty.changeColor(Color.LIGHT_GRAY);
         isCovered = true;
     }
     
@@ -130,6 +131,7 @@ public class Cup extends Item{
      */
     public void makeInconvered(){
         this.lid = null;
+        empty.changeColor(Color.WHITE);
         isCovered = false;
     }
     

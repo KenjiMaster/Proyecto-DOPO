@@ -406,13 +406,25 @@ public class Tower{
      * @param o2 item 2
      */
     public void swap(String[] o1, String[] o2){
-        int indexItem1 = findIndexItem(o1[0],o1[1]);
-        int indexItem2 = findIndexItem(o2[0],o2[1]);
-        Item item1 = items.get(indexItem1);
-        Item item2 = items.get(indexItem2);
-        items.set(indexItem1,item2);
-        items.set(indexItem2,item1);
-        redraw();
+        if(!items.isEmpty()){
+            Integer indexItem1 = findIndexItem(o1[0],o1[1]);
+            Integer indexItem2 = findIndexItem(o2[0],o2[1]);
+            if(indexItem1 == null || indexItem2 == null){
+                lastOperation = false ;
+                if(isVisible) JOptionPane.showMessageDialog(null,"No se encontraron los elementos");
+            }
+            else{
+               Item item1 = items.get(indexItem1);
+                Item item2 = items.get(indexItem2);
+                items.set(indexItem1,item2);
+                items.set(indexItem2,item1);
+                redraw();
+                lastOperation = true; 
+            }
+        }else{
+            lastOperation = false;
+            if(isVisible) JOptionPane.showMessageDialog(null,"No hay elementos en la torre");
+        }
     }
     
     /**
@@ -420,10 +432,12 @@ public class Tower{
      * @param type tipo de item cup/lid
      * @param number numero del item
      */
-    private int findIndexItem(String type, String number){
+    private Integer findIndexItem(String type, String number){
         if(type.equals("cup")){
+            if(!Cup.containCup(Integer.valueOf(number))) return null;
             return Cup.getIndex(Integer.valueOf(number));
         }else{
+            if(!Lid.containLid(Integer.valueOf(number))) return null;
             return Lid.getIndex(Integer.valueOf(number));
         }
     }
@@ -457,6 +471,7 @@ public class Tower{
             }
         }
         redraw();
+        lastOperation = true;
     }
     
     /**
@@ -468,6 +483,28 @@ public class Tower{
         indexLastCups.clear();
         Cup.clearIndex();
         Lid.clearIndex();
+    }
+    
+    /**
+     * Aconsejar cambio para reducir el tamaño de la torre.
+     * @return pareja a itercambiar o null si no hay cambio.
+     */
+    public String[][] swapToReduce() {
+        for (int i = 0; i < items.size() - 1; i++) {
+            Item first = items.get(i);
+            Item second = items.get(i + 1);
+            if (second instanceof Cup && first.getNumber() < second.getNumber()) {
+                String firstType = first instanceof Cup ? "cup" : "lid";
+                String[][] result = {
+                    {firstType, String.valueOf(first.getNumber())},
+                    {"cup", String.valueOf(second.getNumber())}
+                };
+                lastOperation = true;
+                return result;
+            }
+        }
+        lastOperation = false;
+        return null;
     }
     
     /**

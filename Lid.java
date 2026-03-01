@@ -66,6 +66,10 @@ public class Lid extends Item{
         lid.setPosition(xPosition,yPosition);
     }
     
+    public int getWidth(){
+        return width;
+    }
+    
     /**
      * Hacer visible la figura de tapa.
      */

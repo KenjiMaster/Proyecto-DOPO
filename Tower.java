@@ -66,13 +66,13 @@ public class Tower{
      */
     public void pushCup(int i){
         if(!Cup.containCup(i)){
-            Cup cup = new Cup(i,items.size(),this);
+            Cup cup = new Cup(i,items.size(),this); 
             items.add(cup);
             indexLastCups.add(items.size()-1);
-            height += cup.getHeight();
             if(isVisible && (height+(2*i-1))*10 < maxHeight){
                 cup.makeVisibleShape();
             }
+            height += cup.getHeight();
             lastOperation = true;
         }else{
             lastOperation = false;
@@ -93,33 +93,7 @@ public class Tower{
             items.remove(cup);
             indexLastCups.remove((Integer) cup.getNumber());
             cup.remove();
-            if(isVisible){
-                canvasOperation = true;
-                makeInvisible();
-                isVisible = true;
-            }
-            indexLastCups.clear();
-            indexLastLids.clear();
-            height = 0;
-            int i = 0;
-            for (Item item : items) {
-                if (item instanceof Cup) {
-                    cup = (Cup) item;
-                    Cup.setIndex(cup.getNumber(),i);
-                    indexLastCups.add(i);
-                    cup.createShapeCup(height,width,maxHeight);
-                } else if (item instanceof Lid) {
-                    Lid lid = (Lid) item;
-                    Lid.setIndex(lid.getNumber(),i);
-                    indexLastLids.add(i);
-                    lid.createShapeLid(height,width,maxHeight);
-                }
-                height += item.getHeight();
-                i++;
-            }
-            if(isVisible){
-                makeVisible();
-            }
+            redraw();
             lastOperation = true;
         }else{
             lastOperation = false;
@@ -141,33 +115,7 @@ public class Tower{
                 items.remove(cup);
                 indexLastCups.remove((Integer)cup.getNumber());
                 cup.remove();
-                if(isVisible){
-                    canvasOperation = true;
-                    makeInvisible();
-                    isVisible = true;
-                }
-                indexLastCups.clear();
-                indexLastLids.clear();
-                height = 0;
-                int in = 0;
-                for (Item item : items) {
-                    if (item instanceof Cup) {
-                        cup = (Cup) item;
-                        Cup.setIndex(cup.getNumber(),in);
-                        indexLastCups.add(in);
-                        cup.createShapeCup(height,width,maxHeight);
-                    } else if (item instanceof Lid) {
-                        Lid lid = (Lid) item;
-                        Lid.setIndex(lid.getNumber(),in);
-                        indexLastLids.add(in);
-                        lid.createShapeLid(height,width,maxHeight);
-                    }
-                    height += item.getHeight();
-                    in++;
-                }
-                if(isVisible){
-                    makeVisible();
-                }
+                redraw();
                 lastOperation = true;
             }else{
                 lastOperation = false;
@@ -192,7 +140,7 @@ public class Tower{
             }else{
                 lid = new Lid(i,items.size(),this);
             }
-            if(isVisible  && 10+(height*10) < maxHeight){
+            if(isVisible  && 10+(height*10) < maxHeight && lid.getWidth()*10 < width){
                     lid.makeVisibleShape();
             }
             items.add(lid);
@@ -215,33 +163,7 @@ public class Tower{
             items.remove(lid);
             indexLastLids.remove((Integer) lid.getNumber());
             lid.remove();
-            if(isVisible){
-                canvasOperation = true;
-                makeInvisible();
-                isVisible = true;
-            }
-            indexLastCups.clear();
-            indexLastLids.clear();
-            height = 0;
-            int i = 0;
-            for (Item item : items) {
-                if (item instanceof Cup) {
-                    Cup cup = (Cup) item;
-                    Cup.setIndex(cup.getNumber(),i);
-                    indexLastCups.add(i);
-                    cup.createShapeCup(height,width,maxHeight);
-                } else if (item instanceof Lid) {
-                    lid = (Lid) item;
-                    Lid.setIndex(lid.getNumber(),i);
-                    indexLastLids.add(i);
-                    lid.createShapeLid(height,width,maxHeight);
-                }
-                height += item.getHeight();
-                i++;
-            }
-            if(isVisible){
-                makeVisible();
-            }
+            redraw();
             lastOperation = true;
         }else{
             lastOperation = false;
@@ -260,33 +182,7 @@ public class Tower{
             items.remove(lid);
             indexLastLids.remove((Integer) lid.getNumber());
             lid.remove();
-            if(isVisible){
-                canvasOperation = true;
-                makeInvisible();
-                isVisible = true;
-            }
-            indexLastCups.clear();
-            indexLastLids.clear();
-            height = 0;
-            int in = 0;
-            for (Item item : items) {
-                if (item instanceof Cup) {
-                    Cup cup = (Cup) item;
-                    Cup.setIndex(cup.getNumber(),in);
-                    indexLastCups.add(in);
-                    cup.createShapeCup(height,width,maxHeight);
-                } else if (item instanceof Lid) {
-                    lid = (Lid) item;
-                    Lid.setIndex(lid.getNumber(),in);
-                    indexLastLids.add(in);
-                    lid.createShapeLid(height,width,maxHeight);
-                }
-                height += item.getHeight();
-                in++;
-            }
-            if(isVisible){
-                makeVisible();
-            }
+            redraw();
             lastOperation = true;
         }else{
             lastOperation = false;
@@ -360,42 +256,7 @@ public class Tower{
         if (a instanceof Cup) return -1;
         return 1;
         });
-        if(isVisible){
-            canvasOperation = true;
-            makeInvisible();
-            isVisible = true;
-        }
-        indexLastCups.clear();
-        indexLastLids.clear();
-        height = 0;
-        int i = 0;
-        int last = -1;
-        Item lastItem = null;
-        for (Item item : items) {
-            if (item instanceof Cup) {
-                Cup cup = (Cup) item;
-                Cup.setIndex(cup.getNumber(),i);
-                indexLastCups.add(i);
-                last = cup.getNumber();
-                cup.createShapeCup(height,width,maxHeight);
-            } else if (item instanceof Lid) {
-                Lid lid = (Lid) item;
-                Lid.setIndex(lid.getNumber(),i);
-                indexLastLids.add(i);
-                lid.createShapeLid(height,width,maxHeight);
-                if(last == lid.getNumber()){
-                    Cup cup = (Cup) lastItem;
-                    cup.makeConvered(lid);
-                }
-                last = -1;
-            }
-            i++;
-            height += item.getHeight();
-            lastItem = item;
-        }
-        if(isVisible){
-            makeVisible();
-        }
+        redraw();
         lastOperation = true;
     }
     
@@ -404,6 +265,11 @@ public class Tower{
      */
     public void reverseTower(){
         Collections.reverse(items);
+        redraw();
+        lastOperation = true;
+    }
+    
+    private void redraw(){
         if(isVisible){
             canvasOperation = true;
             makeInvisible();
@@ -440,7 +306,7 @@ public class Tower{
         if(isVisible){
             makeVisible();
         }
-        lastOperation = true;
+        
     }
     
     /**

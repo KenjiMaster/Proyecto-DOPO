@@ -353,7 +353,6 @@ public class Tower{
         if(isVisible){
             makeVisible();
         }
-        
     }
     
     /**
@@ -430,6 +429,48 @@ public class Tower{
     }
     
     /**
+     * Cubrir tazas si la torre tiene sus tapas.
+     */
+    public void cover(){
+        List<Integer> numberLids = new ArrayList<>();
+        List<Integer> numberCups = new ArrayList<>();
+        List<Item> oldItems = new ArrayList<>(items);
+        for(Item item : items){
+            if(item instanceof Cup) numberCups.add(item.getNumber());
+            else numberLids.add(item.getNumber()); 
+        }
+        if(isVisible){
+            canvasOperation = true;
+            makeInvisible();
+            isVisible = true;
+        }
+        clearTower();
+        for(Item item : oldItems){
+            if(item instanceof Cup){
+                pushCup(item.getNumber());
+                if(numberLids.contains(item.getNumber())){
+                    pushLid(item.getNumber());
+                    numberLids.remove((Integer)item.getNumber());
+                }
+            }else{
+                if(numberLids.contains(item.getNumber()) && !numberCups.contains(item.getNumber())) pushLid(item.getNumber());
+            }
+        }
+        redraw();
+    }
+    
+    /**
+     * Limpiar todos los contenedores
+     */
+    private void clearTower(){
+        items.clear();
+        indexLastLids.clear();
+        indexLastCups.clear();
+        Cup.clearIndex();
+        Lid.clearIndex();
+    }
+    
+    /**
      * Obtener estado de la ultima operacion.
      * @return valor booleano de la ultima operacion
      */
@@ -442,8 +483,6 @@ public class Tower{
      */
     public void exit(){
         makeInvisible();
-        items.clear();
-        indexLastCups.clear();
-        indexLastLids.clear();
+        clearTower();
     }
 }

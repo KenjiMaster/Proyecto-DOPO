@@ -53,6 +53,13 @@ public class Cup extends Item{
     }
     
     /**
+     * Limpiar el contenedor de numeros usados.
+     */
+    public static void clearIndex(){
+        usedNumbers.clear();
+    }
+    
+    /**
      * Hacer visible la figura de taza.
      */
     public void makeVisibleShape(){

@@ -67,6 +67,13 @@ public class Lid extends Item{
     }
     
     /**
+     * Limpiar el contenedor de numeros usados.
+     */
+    public static void clearIndex(){
+        usedNumbers.clear();
+    }
+    
+    /**
      * Obtener el ancho de la tapa.
      * @return numero del ancho
      */

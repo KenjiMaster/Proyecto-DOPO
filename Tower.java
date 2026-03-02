@@ -20,34 +20,6 @@ public class Tower{
     private boolean isVisible;
     private boolean canvasOperation;
     private boolean lastOperation;
-    private static Tower towerSingleton;
-
-    /**
-     * Obtener Tower singleton.
-     * @param  width ancho del canvas
-     * @param  height alto del canvas
-     * @return objeto torre
-     */
-    public static Tower getTower(int width, int height){
-        if(towerSingleton == null) {
-            towerSingleton = new Tower(width, height);
-        }
-        return towerSingleton;
-    }
-    
-    /**
-     * Obtener Tower singleton.
-     * @param  width ancho del canvas
-     * @param  height alto del canvas
-     * @param  cups cantidad de copas iniciales
-     * @return objeto torre
-     */
-    public static Tower getTower(int width, int height, int cups){
-        if(towerSingleton == null) {
-            towerSingleton = new Tower(width, height, cups);
-        }
-        return towerSingleton;
-    }
     
     /**
      * Constructor de Tower.
@@ -55,7 +27,7 @@ public class Tower{
      * @param  height alto del canvas
      * @param  cups cantidad de copas iniciales
      */
-    private Tower(int width, int maxHeight, int cups){
+    public Tower(int width, int maxHeight, int cups){
         this.width = width;
         this.maxHeight = maxHeight;
         canvas = Canvas.getCanvas(width,maxHeight);
@@ -82,7 +54,7 @@ public class Tower{
      * @param  width ancho del canvas
      * @param  height alto del canvas
      */
-    private Tower(int width, int maxHeight){
+    public Tower(int width, int maxHeight){
         this.width = width;
         this.maxHeight = maxHeight;
         canvas = Canvas.getCanvas(width,maxHeight);

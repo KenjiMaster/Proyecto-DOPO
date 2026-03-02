@@ -1,0 +1,32 @@
+1. ¿Cuáles fueron los mini-ciclos definidos? Justifíquenlos.
+	-Mini-Ciclo 1: Implementar la sobrecarga de tower y permitir intercambios de elementos en la torre.
+	-Mini-Ciclo 2: Reorganizar elementos para que todas las tapas queden encima de sus tazas y se vean diferentes.
+	-Mini-Ciclo 3: Encontrar un intercambio que reduzca la altura total.
+	-Mini-Ciclo 4: Implementación de test unitarios además de la documentación junto con los modelos de astah.
+
+2. ¿Cuál es el estado actual del proyecto en términos de mini-ciclos? ¿por qué?
+	-Todos lo mini-ciclos han sido completados satisfactoriamente, ya que el trabajo tuvo una buena distribución de ciclos además de un buen manejo del tiempo que nos permitió llegar al final de lo pronosticado.
+
+3. ¿Cuál fue el tiempo total invertido por cada uno de ustedes? (Horas/Hombre)
+	-(8/Jose Daniel Garcia Pineda)(8/Jhonatan Stiven Peña Mora)
+
+4. ¿Cuál consideran fue el mayor logro? ¿Por qué?
+	-Implementar los test correctamente, por la forma en la que instanciamos tower y como almacenamos los elementos es
+	complejo tener varias torres, lo solucionamos utilizando salir del simulador para que los valores se reinicien.
+
+5. ¿Cuál consideran que fue el mayor problema técnico? ¿Qué hicieron para resolverlo?
+	-No hubo realmente un problema técnico ya que en el primer ciclo hicimos un buen trabajo asi que extender el funcionamiento
+	fue bastante facil.
+
+6. ¿Qué hicieron bien como equipo? ¿Qué se comprometen a hacer para mejorar los resultados?
+	-La distribución de ciclos y un desarrollo ágil, nos comprometemos a usar de una mejor manera los tiempos ya que fue en algo que no nos fijamos y nos toco ser bastante precisos a la hora del desarrollo.
+
+7. Considerando las prácticas XP incluidas en los laboratorios. ¿cuál fue la más útil? ¿por qué?
+	-La mas útil fue unit test ya que es una forma muy buena de saber el correcto funcionamiento del codigo.
+
+8. ¿Qué referencias usaron? ¿Cuál fue la más útil? Incluyan citas con estándares adecuados.
+	-La referencia que usamos y fue la mas útil fue la de la api de java ya que este proyecto incluyo bastantes detalles de programcion a los que no estamos acostumbramos.
+
+Bibliografía:
+
+Java Platform SE 8. (2025b, octubre 20). https://docs.oracle.com/javase/8/docs/api/

@@ -7,7 +7,6 @@ import java.util.*;
  */
 public class Lid extends Item{
     
-    private static Map<Integer,Integer> usedNumbers = new HashMap<>();
     private Cup cup;
     private int width;
     private Rectangle lid;
@@ -18,17 +17,15 @@ public class Lid extends Item{
      * @param  index indice en la torre
      * @param  tower torre
      */
-    public Lid(Cup cup,int index,Tower tower){
-        if(!usedNumbers.containsKey((Integer) cup.getNumber())){
-            this.makeInvisible();
-            this.setHeight(1);
-            this.width = cup.getHeight();
-            this.setNumber(cup.getNumber());
-            usedNumbers.put(cup.getNumber(),index);
-            this.cup = cup;
-            this.cup.makeConvered(this);
-            createShapeLid(tower.height(),Tower.width,Tower.maxHeight);
-        }
+    public Lid(Cup cup,Tower tower){
+        this.makeInvisible();
+        this.setHeight(1);
+        this.width = cup.getHeight();
+        this.setNumber(cup.getNumber());
+        //usedNumbers.put(cup.getNumber(),index);
+        this.cup = cup;
+        this.cup.makeCovered(this);
+        createShape(tower.height(),Tower.width,Tower.maxHeight);
     }
     
     /**
@@ -37,16 +34,14 @@ public class Lid extends Item{
      * @param  index indice en la torre
      * @param  tower torre
      */
-    public Lid(int i,int index, Tower tower){
-        if(!usedNumbers.containsKey((Integer)i)){
-            this.makeInvisible();
-            this.setHeight(1);
-            this.width = 2*i - 1;
-            this.setNumber(i);
-            this.cup = null;
-            usedNumbers.put(i,index);
-            createShapeLid(tower.height(),Tower.width,Tower.maxHeight);
-        }
+    public Lid(int i, Tower tower){
+        this.makeInvisible();
+        this.setHeight(1);
+        this.width = 2*i - 1;
+        this.setNumber(i);
+        this.cup = null;
+        //usedNumbers.put(i,index);
+        createShape(tower.height(),Tower.width,Tower.maxHeight);
     }
     
     /**
@@ -55,7 +50,8 @@ public class Lid extends Item{
      * @param  width ancho de la torre
      * @param  maxHeight altura maxima de la torre
      */
-    public void createShapeLid(int height,int width,int maxHeight){
+    @Override
+    public void createShape(int height,int width,int maxHeight){
         lid = new Rectangle();
         lid.changeColor(this.makeColor(this.getNumber()));
         lid.changeSize(this.getHeight()*10,this.width*10);
@@ -64,13 +60,6 @@ public class Lid extends Item{
         int xPosition = vertical-(this.width*5);
         int yPosition = floor - (this.getHeight()*10);
         lid.setPosition(xPosition,yPosition);
-    }
-    
-    /**
-     * Limpiar el contenedor de numeros usados.
-     */
-    public static void clearIndex(){
-        usedNumbers.clear();
     }
     
     /**
@@ -84,56 +73,56 @@ public class Lid extends Item{
     /**
      * Hacer visible la figura de tapa.
      */
-    public void makeVisibleShape(){
+    @Override
+    public void makeVisible(){
         lid.makeVisible();
-        this.makeVisible();
     }
     
     /**
      * Hacer invisible la figura de tapa.
      */
-    public void makeInvisibleShape(){
-        lid.makeInvisible();
-        this.makeInvisible();
+    @Override
+    public void makeInvisible(){
+        isVisible = false;
+        if(lid != null){
+            lid.makeInvisible();
+        }
     }
     
     /**
      * Removedor de Lid.
      */
+    @Override
     public void remove(){
-        this.makeInvisibleShape();
-        usedNumbers.remove((Integer) this.getNumber());
+        this.makeInvisible();
+        //usedNumbers.remove((Integer) this.getNumber());
         if(!(this.cup == null)){
-            this.cup.makeInconvered();
+            this.cup.makeIncovered();
             this.cup = null;
         }
         
     }
     
-    /**
-     * Obtener indice de torre de la Lid i.
-     * @param  i numero
-     * @return numero de indice
-     */
-    public static int getIndex(int i){
-        return usedNumbers.get(i);
+    @Override
+    public boolean isCovered(){
+        return false;
     }
     
-    /**
-     * Asignar indice de la torre de la Lid i.
-     * @param  i numero 
-     * @param  index indice de la torre
-     */
-    public static void setIndex(int i,int index){
-        usedNumbers.put(i,index);
+    @Override
+    public void onStackedAbove(Item below){
+        if (below instanceof Cup && below.getNumber() == this.getNumber()){
+            ((Cup) below).makeCovered(this);
+        }
+        
     }
     
-    /**
-     * Mirar contenencia de la Lid i.
-     * @param  i numero 
-     * @return valor booleano de contenencia
-     */
-    public static boolean containLid(int i){
-        return usedNumbers.containsKey((Integer)i);
+    @Override
+    public String getType(){
+        return "lid";
+    }
+    
+    @Override
+    public void register(Tower tower, int index){
+        tower.registerLid(this.getNumber(), index);
     }
 }

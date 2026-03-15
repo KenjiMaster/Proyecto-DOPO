@@ -26,14 +26,14 @@ public class Towercc2Test
     
     @Test
     public void accordingGPShouldCreateTowerWithElements(){
-        Tower tower = new Tower(400,400,6);
+        Tower tower = new Tower(6);
         assertEquals(36,tower.height());
         tower.exit();
     }
     
     @Test
     public void accordingGPShouldNotCreateElementsInTower(){
-        Tower tower = new Tower(400,400,6);
+        Tower tower = new Tower(6);
         for(int i=1;i<=6;i++) tower.pushCup(i);
         assertEquals(36,tower.height());
         tower.exit();
@@ -41,7 +41,7 @@ public class Towercc2Test
     
     @Test
     public void accordingGPShouldSwapElementsInTower(){
-        Tower tower = new Tower(400,400,6);
+        Tower tower = new Tower(6);
         tower.swap(new String[] {"cup","3"},new String[] {"cup","1"});
         String[][] testOrder = new String[][] {{"cup","3"},{"cup","2"},{"cup","1"},{"cup","4"},{"cup","5"},{"cup","6"}};
         for(int i=0; i<testOrder.length;i++){
@@ -52,7 +52,7 @@ public class Towercc2Test
     
     @Test
     public void accordingGPShouldNotSwapElementsIfNotExists(){
-        Tower tower = new Tower(400,400,6);
+        Tower tower = new Tower(6);
         tower.swap(new String[] {"cup","8"},new String[] {"cup","10"});
         assertEquals(false,tower.ok());
         tower.exit();
@@ -60,7 +60,7 @@ public class Towercc2Test
     
     @Test
     public void accordingGPShouldCoverCupsWithLid(){
-        Tower tower = new Tower(400,400,6);
+        Tower tower = new Tower(6);
         int oldLidedCups = tower.lidedCups().length;
         for(int i=1;i<4;i++) tower.pushLid(i);
         tower.cover();
@@ -72,7 +72,7 @@ public class Towercc2Test
     
     @Test
     public void accordingGPShouldNotCoverCupsIfNotHaveLid(){
-        Tower tower = new Tower(400,400,6);
+        Tower tower = new Tower(6);
         int oldLidedCups = tower.lidedCups().length;
         tower.cover();
         int newLidedCups = tower.lidedCups().length;
@@ -82,7 +82,7 @@ public class Towercc2Test
     
     @Test
     public void accordingGPShouldSwapToReduceHeightInTower(){
-        Tower tower = new Tower(400,400,6);
+        Tower tower = new Tower(6);
         String [][] swapTest = new String[][] {{"cup","1"},{"cup","2"}};
         String[][] swapTower = tower.swapToReduce();
         for(int i=0;i<swapTest.length;i++){
@@ -93,7 +93,7 @@ public class Towercc2Test
     
     @Test
     public void accordingGPShouldNotSwapToReduceHeightInTower(){
-        Tower tower = new Tower(400,400,6);
+        Tower tower = new Tower(6);
         tower.reverseTower();
         String[][] swapTower = tower.swapToReduce();
         assertNull(swapTower);

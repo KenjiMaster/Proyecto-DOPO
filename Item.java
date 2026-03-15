@@ -5,9 +5,9 @@ import java.awt.*;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Item{
+public abstract class Item{
     
-    private boolean isVisible;
+    protected boolean isVisible;
     private int height;
     private int number;
     private Color color;
@@ -26,16 +26,12 @@ public class Item{
     /**
      * Hacer invisible.
      */
-    public void makeInvisible(){
-        isVisible = false;
-    }
+    public abstract void makeInvisible();
     
     /**
      * Hacer visible.
      */
-    public void makeVisible(){
-        isVisible = true;
-    }
+    public abstract void makeVisible();
     
     /**
      * Asignar algtura.
@@ -68,4 +64,16 @@ public class Item{
     public int getNumber(){
         return number;
     }
+    
+    public abstract void createShape(int height,int width,int maxHeight);
+    
+    public abstract boolean isCovered();
+    
+    public abstract void remove();
+    
+    public abstract void onStackedAbove(Item below);
+    
+    public abstract String getType();
+    
+    public abstract void register(Tower tower, int index);
 }

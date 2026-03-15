@@ -12,6 +12,8 @@ public class Tower{
     public static int maxHeight;
     public static int width;
     private int height;
+    private Map<Integer,Integer> cupIndex;
+    private Map<Integer,Integer> lidIndex;
     private List<Integer> indexLastCups;
     private List<Integer> indexLastLids;
     private List<Item> items;
@@ -21,33 +23,7 @@ public class Tower{
     private boolean canvasOperation;
     private boolean lastOperation;
     
-    /**
-     * Constructor de Tower.
-     * @param  width ancho del canvas
-     * @param  height alto del canvas
-     * @param  cups cantidad de copas iniciales
-     */
-    public Tower(int width, int maxHeight, int cups){
-        this.width = width;
-        this.maxHeight = maxHeight;
-        canvas = Canvas.getCanvas(width,maxHeight);
-        canvas.setVisible(false);
-        items = new ArrayList<>();
-        indexLastCups = new ArrayList<>();
-        indexLastLids = new ArrayList<>();
-        isVisible = false;
-        canvasOperation = false;
-        lastOperation = true;
-        marks = new ArrayList<>();
-        for(int i=0;i<maxHeight;i+=10){
-            Rectangle rectangle = new Rectangle();
-            rectangle.changeColor(Color.black);
-            rectangle.setPosition(0,i);
-            rectangle.changeSize(1,10);
-            marks.add(rectangle);
-        }
-        for(int i=1; i<=cups; i++) pushCup(i);
-    }
+    
     
     /**
      * Constructor de Tower.
@@ -62,6 +38,8 @@ public class Tower{
         items = new ArrayList<>();
         indexLastCups = new ArrayList<>();
         indexLastLids = new ArrayList<>();
+        cupIndex = new HashMap<>();
+        lidIndex = new HashMap<>();
         isVisible = false;
         canvasOperation = false;
         lastOperation = true;
@@ -76,16 +54,28 @@ public class Tower{
     }
     
     /**
+     * Constructor de Tower.
+     * @param  cups cantidad de copas iniciales
+     */
+    public Tower(int cups){
+        this(300,300);
+        for(int i=1; i<=cups; i++){
+            pushCup(i);
+        }
+    }
+    
+    /**
      * Agregar una Cup i a la torre.
      * @param  i numero.
      */
     public void pushCup(int i){
-        if(!Cup.containCup(i)){
-            Cup cup = new Cup(i,items.size(),this); 
+        if(!cupIndex.containsKey((Integer)i)){
+            Cup cup = new Cup(i,this);
+            cupIndex.put(i,items.size());
             items.add(cup);
             indexLastCups.add(items.size()-1);
             if(isVisible && (height+(2*i-1))*10 < maxHeight){
-                cup.makeVisibleShape();
+                cup.makeVisible();
             }
             height += cup.getHeight();
             lastOperation = true;
@@ -99,14 +89,15 @@ public class Tower{
      * Eliminar ultima Cup.
      */
     public void popCup(){
-        if(items.size() != 0 && !indexLastCups.isEmpty()){
+        if(!indexLastCups.isEmpty()){
             Cup cup = (Cup)items.get(indexLastCups.get(indexLastCups.size()-1));
             height -= cup.getHeight();
-            if(cup.isConvered()){
+            if(cup.isCovered()){
                 removeLid(cup.getNumber());
             }
             items.remove(cup);
             indexLastCups.remove((Integer) cup.getNumber());
+            cupIndex.remove((Integer) cup.getNumber());
             cup.remove();
             redraw();
             lastOperation = true;
@@ -121,14 +112,15 @@ public class Tower{
      * @param  i numero.
      */
     public void removeCup(int i){
-            if(Cup.containCup(i)){
-                Cup cup = (Cup) items.get(Cup.getIndex(i));
+            if(cupIndex.containsKey(i)){
+                Cup cup = (Cup) items.get(cupIndex.get(i));
                 height -= cup.getHeight();
-                if(cup.isConvered()){
+                if(cup.isCovered()){
                     removeLid(cup.getNumber());
                 }
                 items.remove(cup);
                 indexLastCups.remove((Integer)cup.getNumber());
+                cupIndex.remove((Integer) cup.getNumber());
                 cup.remove();
                 redraw();
                 lastOperation = true;
@@ -144,20 +136,21 @@ public class Tower{
      */
     public void pushLid(int i){
         Lid lid = null;
-        if(!Lid.containLid(i)){
+        if(!lidIndex.containsKey(i)){
             if(!items.isEmpty()){
                 Item item = items.get(items.size()-1);
                 if(item.getNumber() == i){
-                    lid = new Lid((Cup)item,items.size(),this);
+                    lid = new Lid((Cup)item,this);
                 }else{
-                    lid = new Lid(i,items.size(),this);
+                    lid = new Lid(i,this);
                 }
             }else{
-                lid = new Lid(i,items.size(),this);
+                lid = new Lid(i,this);
             }
             if(isVisible  && 10+(height*10) < maxHeight && lid.getWidth()*10 < width){
-                    lid.makeVisibleShape();
+                    lid.makeVisible();
             }
+            lidIndex.put(i,items.size());
             items.add(lid);
             indexLastLids.add(items.size()-1);
             height += lid.getHeight();
@@ -172,11 +165,12 @@ public class Tower{
      * Eliminar ultima Lid.
      */
     public void popLid(){
-        if(items.size() != 0 && !indexLastLids.isEmpty()){
+        if(!indexLastLids.isEmpty()){
             Lid lid = (Lid)items.get(indexLastLids.get(indexLastLids.size()-1));
             height -= lid.getHeight();
             items.remove(lid);
             indexLastLids.remove((Integer) lid.getNumber());
+            lidIndex.remove((Integer) lid.getNumber());
             lid.remove();
             redraw();
             lastOperation = true;
@@ -191,11 +185,12 @@ public class Tower{
      * @param  i numero
      */
     public void removeLid(int i){
-        if(Lid.containLid(i)){
-            Lid lid = (Lid) items.get(Lid.getIndex(i));
+        if(lidIndex.containsKey(i)){
+            Lid lid = (Lid) items.get(lidIndex.get(i));
             height -= lid.getHeight();
             items.remove(lid);
             indexLastLids.remove((Integer) lid.getNumber());
+            lidIndex.remove((Integer) lid.getNumber());
             lid.remove();
             redraw();
             lastOperation = true;
@@ -219,12 +214,8 @@ public class Tower{
     public void makeVisible(){
         int tempHeight = 0;
         for (Item item : items) {
-            if (item instanceof Cup && (tempHeight+item.getHeight())*10 < maxHeight) {
-                Cup cup = (Cup) item;
-                cup.makeVisibleShape();
-            } else if (item instanceof Lid && (tempHeight+item.getHeight())*10 < maxHeight) {
-                Lid lid = (Lid) item;
-                lid.makeVisibleShape();
+            if ((tempHeight+item.getHeight())*10 < maxHeight) {
+               item.makeVisible(); 
             }
             tempHeight += item.getHeight();
         } 
@@ -242,13 +233,7 @@ public class Tower{
      */
     public void makeInvisible(){
         for (Item item : items) {
-            if (item instanceof Cup) {
-                Cup cup = (Cup) item;
-                cup.makeInvisibleShape();
-            } else if (item instanceof Lid) {
-                Lid lid = (Lid) item;
-                lid.makeInvisibleShape();
-            }
+            item.makeInvisible();
         }
         for(Rectangle rectangle : marks){
             rectangle.makeInvisible();
@@ -269,7 +254,7 @@ public class Tower{
         if (a.getNumber() != b.getNumber()) {
             return b.getNumber() - a.getNumber();
         }
-        if (a instanceof Cup) return -1;
+        if (a.getType().equals("cup")) return -1;
         return 1;
         });
         redraw();
@@ -296,29 +281,17 @@ public class Tower{
         }
         indexLastCups.clear();
         indexLastLids.clear();
+        cupIndex.clear();
+        lidIndex.clear();
         height = 0;
-        int i = 0;
-        int last = -1;
         Item lastItem = null;
-        for (Item item : items) {
-            if (item instanceof Cup) {
-                Cup cup = (Cup) item;
-                Cup.setIndex(cup.getNumber(),i);
-                indexLastCups.add(i);
-                last = cup.getNumber();
-                cup.createShapeCup(height,width,maxHeight);
-            } else if (item instanceof Lid) {
-                Lid lid = (Lid) item;
-                Lid.setIndex(lid.getNumber(),i);
-                indexLastLids.add(i);
-                lid.createShapeLid(height,width,maxHeight);
-                if(last == lid.getNumber()){
-                    Cup cup = (Cup) lastItem;
-                    cup.makeConvered(lid);
-                }
-                last = -1;
+        for(int i = 0; i < items.size(); i++){
+            Item item = items.get(i);
+            item.register(this, i);
+            item.createShape(height, width, maxHeight);
+            if(lastItem != null){
+                item.onStackedAbove(lastItem);
             }
-            i++;
             height += item.getHeight();
             lastItem = item;
         }
@@ -335,12 +308,9 @@ public class Tower{
         int countLidedCups = 0;
         List<Integer> listLidedCups = new ArrayList<>();
         for(Item item : items){
-            if(item instanceof Cup){
-                Cup cup = (Cup) item;
-                if(cup.isConvered()){
-                   countLidedCups++;
-                    listLidedCups.add(item.getNumber()); 
-                }
+            if(item.isCovered()){
+                countLidedCups++;
+                listLidedCups.add(item.getNumber()); 
             }
         }
         int[] resLidedCups = new int[countLidedCups];
@@ -360,13 +330,8 @@ public class Tower{
         String[][] resStackingItems = new String[items.size()][2];
         for(int i=0;i<items.size();i++){
             Item item = items.get(i);
-            if(item instanceof Cup){
-                resStackingItems[i][0] = "cup";
-                resStackingItems[i][1] = String.valueOf(item.getNumber());
-            }else{
-                resStackingItems[i][0] = "lid";
-                resStackingItems[i][1] = String.valueOf(item.getNumber());
-            }
+            resStackingItems[i][0] = item.getType();
+            resStackingItems[i][1] = String.valueOf(item.getNumber());
         }
         lastOperation = true;
         return resStackingItems;
@@ -383,10 +348,12 @@ public class Tower{
             Integer indexItem2 = findIndexItem(o2[0],o2[1]);
             if(indexItem1 == null || indexItem2 == null){
                 lastOperation = false ;
-                if(isVisible) JOptionPane.showMessageDialog(null,"No se encontraron los elementos");
+                if(isVisible){
+                    JOptionPane.showMessageDialog(null,"No se encontraron los elementos");
+                }
             }
             else{
-               Item item1 = items.get(indexItem1);
+                Item item1 = items.get(indexItem1);
                 Item item2 = items.get(indexItem2);
                 items.set(indexItem1,item2);
                 items.set(indexItem2,item1);
@@ -395,7 +362,9 @@ public class Tower{
             }
         }else{
             lastOperation = false;
-            if(isVisible) JOptionPane.showMessageDialog(null,"No hay elementos en la torre");
+            if(isVisible){
+                JOptionPane.showMessageDialog(null,"No hay elementos en la torre"); 
+            }
         }
     }
     
@@ -406,11 +375,11 @@ public class Tower{
      */
     private Integer findIndexItem(String type, String number){
         if(type.equals("cup")){
-            if(!Cup.containCup(Integer.valueOf(number))) return null;
-            return Cup.getIndex(Integer.valueOf(number));
+            if(!cupIndex.containsKey(Integer.valueOf(number))) return null;
+            return  cupIndex.get(Integer.valueOf(number));
         }else{
-            if(!Lid.containLid(Integer.valueOf(number))) return null;
-            return Lid.getIndex(Integer.valueOf(number));
+            if(!lidIndex.containsKey(Integer.valueOf(number))) return null;
+            return lidIndex.get(Integer.valueOf(number));
         }
     }
     
@@ -453,8 +422,8 @@ public class Tower{
         items.clear();
         indexLastLids.clear();
         indexLastCups.clear();
-        Cup.clearIndex();
-        Lid.clearIndex();
+        cupIndex.clear();
+        lidIndex.clear();
     }
     
     /**
@@ -477,6 +446,16 @@ public class Tower{
         }
         lastOperation = false;
         return null;
+    }
+    
+    public void registerCup(int number, int index){
+        cupIndex.put(number, index);
+        indexLastCups.add(index);
+    }
+    
+    public void registerLid(int number, int index){
+        lidIndex.put(number, index);
+        indexLastLids.add(index);
     }
     
     /**

@@ -7,8 +7,6 @@ import java.awt.*;
  * @version (a version number or a date)
  */
 public class Cup extends Item{
-    
-    private static Map<Integer,Integer> usedNumbers = new HashMap<>();
     private Lid lid;
     private boolean isCovered;
     private Rectangle cup;
@@ -20,15 +18,13 @@ public class Cup extends Item{
      * @param  index indice en la torre
      * @param  tower torre
      */
-    public Cup(int i, int index, Tower tower){
-        if(!usedNumbers.containsKey(i)){
-            this.setNumber(i);
-            usedNumbers.put(i,index);
-            this.setHeight(2*i - 1);
-            this.makeInvisible();
-            isCovered = false;
-            createShapeCup(tower.height(),Tower.width,Tower.maxHeight);
-        }
+    public Cup(int i, Tower tower){
+        this.setNumber(i);
+        //usedNumbers.put(i,index);
+        this.setHeight(2*i - 1);
+        this.makeInvisible();
+        isCovered = false;
+        createShape(tower.height(),Tower.width,Tower.maxHeight);
     }
     
     /**
@@ -37,7 +33,8 @@ public class Cup extends Item{
      * @param  width ancho de la torre
      * @param  maxHeight altura maxima de la torre
      */
-    public void createShapeCup(int height,int width,int maxHeight){
+    @Override
+    public void createShape(int height,int width,int maxHeight){
         cup = new Rectangle();
         cup.changeColor(this.makeColor(this.getNumber()));
         cup.changeSize(this.getHeight()*10,this.getHeight()*10);
@@ -52,37 +49,35 @@ public class Cup extends Item{
         empty.setPosition(xPosition+10,yPosition);
     }
     
-    /**
-     * Limpiar el contenedor de numeros usados.
-     */
-    public static void clearIndex(){
-        usedNumbers.clear();
-    }
     
     /**
      * Hacer visible la figura de taza.
      */
-    public void makeVisibleShape(){
+    @Override
+    public void makeVisible(){
         cup.makeVisible();
         empty.makeVisible();
-        this.makeVisible();
     }
     
     /**
      * Hacer invisible la figura de taza.
      */
-    public void makeInvisibleShape(){
-        cup.makeInvisible();
-        empty.makeInvisible();
-        this.makeInvisible();
+    @Override
+    public void makeInvisible(){
+        isVisible = false;
+        if(cup != null){
+            cup.makeInvisible();
+            empty.makeInvisible();
+        }
     }
     
     /**
      * Removedor de Cup.
      */
+    @Override
     public void remove(){
-        usedNumbers.remove((Integer) this.getNumber());
-        this.makeInvisibleShape();
+        //usedNumbers.remove((Integer) this.getNumber());
+        this.makeInvisible();
         if(isCovered){
             lid.remove();
             lid = null;
@@ -90,37 +85,10 @@ public class Cup extends Item{
     }
     
     /**
-     * Obtener indice de torre de la Cup i.
-     * @param  i numero
-     * @return numero de indice
-     */
-    public static int getIndex(int i){
-        return usedNumbers.get(i);
-    }
-    
-    /**
-     * Asignar indice de la torre de la Cup i.
-     * @param  i numero 
-     * @param  index indice de la torre
-     */
-    public static void setIndex(int i,int index){
-        usedNumbers.put(i,index);
-    }
-    
-    /**
-     * Mirar contenencia de la Cup i.
-     * @param  i numero 
-     * @return valor booleano de contenencia
-     */
-    public static boolean containCup(int i){
-        return usedNumbers.containsKey((Integer)i);
-    }
-    
-    /**
      * Tapar la cup.
      * @param  lid tapa de la cup
      */
-    public void makeConvered(Lid lid){
+    public void makeCovered(Lid lid){
         this.lid = lid;
         empty.changeColor(Color.LIGHT_GRAY);
         isCovered = true;
@@ -129,7 +97,7 @@ public class Cup extends Item{
     /**
      * Destapar la cup.
      */
-    public void makeInconvered(){
+    public void makeIncovered(){
         this.lid = null;
         empty.changeColor(Color.WHITE);
         isCovered = false;
@@ -139,7 +107,23 @@ public class Cup extends Item{
      * Mirar si la Cup esta tapada.
      * @return valor booleano de covertura
      */
-    public boolean isConvered(){
+    @Override
+    public boolean isCovered(){
         return this.isCovered;
+    }
+    
+    @Override
+    public void onStackedAbove(Item below){
+        
+    }
+    
+    @Override
+    public String getType(){
+        return "cup";
+    }
+    
+    @Override
+    public void register(Tower tower, int index){
+        tower.registerCup(this.getNumber(), index);
     }
 }

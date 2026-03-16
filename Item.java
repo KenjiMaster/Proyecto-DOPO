@@ -65,15 +65,41 @@ public abstract class Item{
         return number;
     }
     
+    /**
+     * Crear figura del item.
+     * @param height altura de la base
+     * @param width ancho de la torre
+     * @param maxHeight altura maxima de la torre
+     */
     public abstract void createShape(int height,int width,int maxHeight);
     
+    /**
+     * Obtener si esta cubierta
+     * @return si esta cubierta
+     */
     public abstract boolean isCovered();
     
+    /**
+     * Eliminar la figura del item
+     */
     public abstract void remove();
     
+    /**
+     * Cubrir el item inmediatamente anterior.
+     * @param below item debajo del actual
+     */
     public abstract void onStackedAbove(Item below);
     
+    /**
+     * Obtener tipo de item.
+     * @return tipo de item
+     */
     public abstract String getType();
     
+    /**
+     * Registrar el indice en la torre.
+     * @param torre a registrar
+     * @param index indice en la torre
+     */
     public abstract void register(Tower tower, int index);
 }

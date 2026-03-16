@@ -103,11 +103,19 @@ public class Lid extends Item{
         
     }
     
+    /**
+     * Obtener si esta cubierta
+     * @return si esta cubierta
+     */
     @Override
     public boolean isCovered(){
         return false;
     }
     
+    /**
+     * Cubrir el item inmediatamente anterior.
+     * @param below item debajo del actual
+     */
     @Override
     public void onStackedAbove(Item below){
         if (below instanceof Cup && below.getNumber() == this.getNumber()){
@@ -116,11 +124,20 @@ public class Lid extends Item{
         
     }
     
+    /**
+     * Obtener tipo de item.
+     * @return tipo de item
+     */
     @Override
     public String getType(){
         return "lid";
     }
     
+    /**
+     * Registrar el indice en la torre.
+     * @param torre a registrar
+     * @param index indice en la torre
+     */
     @Override
     public void register(Tower tower, int index){
         tower.registerLid(this.getNumber(), index);

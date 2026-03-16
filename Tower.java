@@ -448,11 +448,21 @@ public class Tower{
         return null;
     }
     
+    /**
+     * Registrar el indice en la torre de una cup.
+     * @param number a registrar
+     * @param index indice en la torre
+     */
     public void registerCup(int number, int index){
         cupIndex.put(number, index);
         indexLastCups.add(index);
     }
     
+    /**
+     * Registrar el indice en la torre de una lid.
+     * @param number a registrar
+     * @param index indice en la torre
+     */
     public void registerLid(int number, int index){
         lidIndex.put(number, index);
         indexLastLids.add(index);

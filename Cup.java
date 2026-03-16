@@ -112,16 +112,29 @@ public class Cup extends Item{
         return this.isCovered;
     }
     
+    /**
+     * Cubrir el item inmediatamente anterior.
+     * @param below item debajo del actual
+     */
     @Override
     public void onStackedAbove(Item below){
         
     }
     
+    /**
+     * Obtener tipo de item.
+     * @return tipo de item
+     */
     @Override
     public String getType(){
         return "cup";
     }
     
+    /**
+     * Registrar el indice en la torre.
+     * @param torre a registrar
+     * @param index indice en la torre
+     */
     @Override
     public void register(Tower tower, int index){
         tower.registerCup(this.getNumber(), index);

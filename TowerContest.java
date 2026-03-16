@@ -8,6 +8,11 @@ import javax.swing.JOptionPane;
  */
 public class TowerContest
 {
+    /**
+     * Calcular altura de una serie de tazas.
+     * @param nums valores de las tazas
+     * @return numero con la altura
+     */
     private static long altura(List<Long> nums) {
         Deque<Long> contenedor = new ArrayDeque<>();
         Deque<Long> icontent = new ArrayDeque<>();
@@ -47,11 +52,22 @@ public class TowerContest
         return suma;
     }
     
+    /**
+     * Agreagar taza en ambos contenedores.
+     * @param contenedor pila de valor de espacio de contenedores
+     * @param icontent pila con el valor de las tazas
+     * @param cup taza a almacenar
+     */
     private static void pushBoth(Deque<Long> contenedor, Deque<Long> icontent, long cup) {
         contenedor.addLast(cup - 1);
         icontent.addLast(cup);
     }
- 
+    
+    /**
+     * Encontrar indice del cambio del numero minimo.
+     * @param nums secuencia de numeros de tazas
+     * @return indice del swap encontrado si no -1
+     */
     private static int minimo(List<Long> nums) {
         for (int i = 0; i < nums.size() - 1; i++) {
             if (nums.get(i) < nums.get(i + 1)){
@@ -60,7 +76,12 @@ public class TowerContest
         }
         return -1;
     }
- 
+    
+    /**
+     * Encontrar indice del cambio del numero maximo.
+     * @param nums secuencia de numeros de tazas
+     * @return indice del swap encontrado si no -1
+     */
     private static int maximo(List<Long> nums) {
         for (int i = 0; i < nums.size() - 1; i++) {
             if (nums.get(i) > nums.get(i + 1)){
@@ -69,7 +90,14 @@ public class TowerContest
         }
         return -1;
     }
- 
+    
+    /**
+     * Validar permutaciones de altura.
+     * @param nums secuencia de numeros de tazas
+     * @param h altura deseada
+     * @param tipo debe ser true para minimo y false para maximo
+     * @return verdadero si se valido caso contrario false
+     */
     private static boolean validar(List<Long> nums, long h, boolean tipo) {
         while (true) {
             if (altura(nums) == h){
@@ -85,7 +113,13 @@ public class TowerContest
         }
         return false;
     }
- 
+    
+    /**
+     * Obtener permutacion de solucion.
+     * @param n numero de tazas
+     * @param h altura deseada
+     * @return permutacion de solucion, vacia si no hay
+     */
     private static List<Long> respond(long n, long h) {
         List<Long> nums = new ArrayList<>();
         for (long i = 1; i <= n; i++){
@@ -102,6 +136,12 @@ public class TowerContest
         }
     }
     
+    /**
+     * Obtener cadena con la respuesta de solucion.
+     * @param n numero de tazas
+     * @param h altura deseada
+     * @return cadena con los nuemros de las tazas, en caso de no tener sera imposible
+     */
     public static String solve(long n, long h){
         List<Long> respond = respond(n,h);
         if(respond.isEmpty()){
@@ -116,6 +156,11 @@ public class TowerContest
         }
     }
     
+    /**
+     * Simular solucion con tower, no se podra simular si no hay solucion posible.
+     * @param n numero de tazas
+     * @param h altura deseada
+     */
     public static void simulate(long n, long h){
         List<Long> respond = respond(n,h);
         if(respond.isEmpty()){

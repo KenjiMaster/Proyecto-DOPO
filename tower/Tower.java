@@ -356,7 +356,7 @@ public class Tower{
         int countLidedCups = 0;
         List<Integer> listLidedCups = new ArrayList<>();
         for(Item item : items){
-            if(item.isCovered()){
+            if(item.isCovered() && item instanceof Cup){
                 countLidedCups++;
                 listLidedCups.add(item.getNumber()); 
             }

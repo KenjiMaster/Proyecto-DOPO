@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import tower.Tower;
 
 /**
  * The test class TowerTest.
@@ -34,7 +35,9 @@ public class Towercc2Test
     @Test
     public void accordingGPShouldNotCreateElementsInTower(){
         Tower tower = new Tower(6);
-        for(int i=1;i<=6;i++) tower.pushCup(i);
+        for(int i=1;i<=6;i++){
+            tower.pushCup("normal",i);
+        }
         assertEquals(36,tower.height());
         tower.exit();
     }
@@ -62,7 +65,9 @@ public class Towercc2Test
     public void accordingGPShouldCoverCupsWithLid(){
         Tower tower = new Tower(6);
         int oldLidedCups = tower.lidedCups().length;
-        for(int i=1;i<4;i++) tower.pushLid(i);
+        for(int i=1;i<4;i++){
+            tower.pushLid("normal",i);
+        }
         tower.cover();
         int newLidedCups = tower.lidedCups().length;
         assertEquals(0,oldLidedCups);

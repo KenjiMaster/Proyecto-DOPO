@@ -1,4 +1,6 @@
-import java.awt.*;
+package tower;
+import java.awt.Color;
+import java.util.List;
 /**
  * Clase item para representar entidad.
  * 
@@ -32,6 +34,8 @@ public abstract class Item{
      * Hacer visible.
      */
     public abstract void makeVisible();
+    
+    public abstract void specialMove(List<Item> items);
     
     /**
      * Asignar algtura.

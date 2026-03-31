@@ -1,3 +1,5 @@
+package tower;
+import shapes.*;
 import java.util.*;
 import java.awt.Color;
 import javax.swing.JOptionPane;
@@ -22,6 +24,7 @@ public class Tower{
     private boolean isVisible;
     private boolean canvasOperation;
     private boolean lastOperation;
+    private boolean applyingSpecialMoves = false;
     
     
     
@@ -60,7 +63,7 @@ public class Tower{
     public Tower(int cups){
         this(300,300);
         for(int i=1; i<=cups; i++){
-            pushCup(i);
+            pushCup("normal",i);
         }
     }
     
@@ -68,9 +71,9 @@ public class Tower{
      * Agregar una Cup i a la torre.
      * @param  i numero.
      */
-    public void pushCup(int i){
+    public void pushCup(String type,int i){
         if(!cupIndex.containsKey((Integer)i)){
-            Cup cup = new Cup(i,this);
+            Cup cup = getTypeCup(type,i);
             cupIndex.put(i,items.size());
             items.add(cup);
             indexLastCups.add(items.size()-1);
@@ -78,11 +81,25 @@ public class Tower{
                 cup.makeVisible();
             }
             height += cup.getHeight();
+            redraw();
             lastOperation = true;
         }else{
             lastOperation = false;
             if(isVisible) JOptionPane.showMessageDialog(null,"No se pudo crear Cup: "+i);
         }
+    }
+    
+    private Cup getTypeCup(String type, int i){
+        Cup cup = null;
+        if(type.equals("opener")){
+            cup = new Opener(i,this);
+        }else if(type.equals("hierarchical")){
+            cup = new Hierarchical(i,this);
+        }
+        else{
+            cup = new Cup(i,this);
+        }
+        return cup;
     }
     
     /**
@@ -273,12 +290,19 @@ public class Tower{
     /**
      * Redibujado de la torre.
      */
-    private void redraw(){
+    private void reorden(){
         if(isVisible){
             canvasOperation = true;
             makeInvisible();
             isVisible = true;
         }
+        recalculado();
+        if(isVisible){
+            makeVisible();
+        }
+    }
+    
+    private void recalculado(){
         indexLastCups.clear();
         indexLastLids.clear();
         cupIndex.clear();
@@ -295,9 +319,23 @@ public class Tower{
             height += item.getHeight();
             lastItem = item;
         }
-        if(isVisible){
-            makeVisible();
+    }
+    
+    private void redraw(){
+        if(!applyingSpecialMoves){
+            reorden();
+            applicationSpecialMoves();   
         }
+        reorden();
+    }
+    
+    private void applicationSpecialMoves(){
+        applyingSpecialMoves = true;
+        for(int i = 0; i < items.size(); i++){
+            Item item = items.get(i);
+            item.specialMove(new ArrayList<>(items.subList(0,i)));
+        }
+        applyingSpecialMoves = false;
     }
     
     /**
@@ -402,7 +440,7 @@ public class Tower{
         clearTower();
         for(Item item : oldItems){
             if(item instanceof Cup){
-                pushCup(item.getNumber());
+                pushCup("normal",item.getNumber());
                 if(numberLids.contains(item.getNumber())){
                     pushLid(item.getNumber());
                     numberLids.remove((Integer)item.getNumber());

@@ -1,4 +1,6 @@
+package tower;
 import java.util.*;
+import shapes.Rectangle;
 /**
  * Clase de representacion de tapa.
  * 
@@ -131,6 +133,11 @@ public class Lid extends Item{
     @Override
     public String getType(){
         return "lid";
+    }
+    
+    @Override
+    public void specialMove(List<Item> items){
+        
     }
     
     /**

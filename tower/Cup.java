@@ -1,5 +1,7 @@
-import java.util.*;
+package tower;
+import java.util.List;
 import java.awt.*;
+import shapes.Rectangle;
 /**
  * Clase de representacion de taza.
  * 
@@ -9,8 +11,8 @@ import java.awt.*;
 public class Cup extends Item{
     private Lid lid;
     private boolean isCovered;
-    private Rectangle cup;
-    private Rectangle empty; 
+    protected Rectangle cup;
+    protected Rectangle empty; 
     
     /**
      * Constructor de cup.
@@ -118,6 +120,11 @@ public class Cup extends Item{
      */
     @Override
     public void onStackedAbove(Item below){
+        
+    }
+    
+    @Override
+    public void specialMove(List<Item> items){
         
     }
     

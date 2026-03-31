@@ -1,3 +1,4 @@
+package tower;
 import java.util.*;
 import javax.swing.JOptionPane;
 /**
@@ -168,7 +169,7 @@ public class TowerContest
         }else{
             Tower tower = new Tower(500,500);
             for(long cup : respond){
-                tower.pushCup((int)((cup+1)/2));
+                tower.pushCup("normal",(int)((cup+1)/2));
             }
             tower.makeVisible();
         }

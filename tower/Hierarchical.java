@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Collections;
 import java.awt.Color;
 import shapes.Rectangle;
+import shapes.Triangle;
 
 
 /**
@@ -14,6 +15,8 @@ import shapes.Rectangle;
  */
 public class Hierarchical extends Cup{
     private Tower tower;
+    private Triangle r1;
+    private Triangle r2;
     public Hierarchical(int i, Tower tower){
         super(i,tower);
         this.tower = tower;
@@ -32,6 +35,12 @@ public class Hierarchical extends Cup{
         cup.changeSize(this.getHeight()*10,this.getHeight()*10);
         empty = new Rectangle();
         empty.changeColor(Color.blue);
+        r1 = new Triangle();
+        r1.changeColor(Color.white);
+        r1.changeSize(10,10);
+        r2 = new Triangle();
+        r2.changeColor(Color.white);
+        r2.changeSize(10,10);
         empty.changeSize((this.getHeight()*10)-10,(this.getHeight()*10)-20);
         int floor = maxHeight - height*10;
         int vertical = width/2;
@@ -39,6 +48,33 @@ public class Hierarchical extends Cup{
         int yPosition = floor - this.getHeight()*10;
         cup.setPosition(xPosition,yPosition);
         empty.setPosition(xPosition+10,yPosition);
+        r1.setPosition(xPosition+5,yPosition);
+        r2.setPosition(xPosition+(this.getHeight()*10)-5,yPosition);
+    }
+    
+    /**
+     * Hacer visible la figura de taza.
+     */
+    @Override
+    public void makeVisible(){
+        cup.makeVisible();
+        empty.makeVisible();
+        r1.makeVisible();
+        r2.makeVisible();
+    }
+    
+    /**
+     * Hacer invisible la figura de taza.
+     */
+    @Override
+    public void makeInvisible(){
+        isVisible = false;
+        if(cup != null){
+            cup.makeInvisible();
+            empty.makeInvisible();
+            r1.makeInvisible();
+            r2.makeInvisible();
+        }
     }
     
     @Override

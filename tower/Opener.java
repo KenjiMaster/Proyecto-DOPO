@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.awt.*;
 import shapes.Rectangle;
+import shapes.Circle;
 /**
  * Write a description of class Opener here.
  * 
@@ -12,6 +13,8 @@ import shapes.Rectangle;
  */
 public class Opener extends Cup{
     private Tower tower;
+    private Circle r1;
+    private Circle r2;
     public Opener(int i, Tower tower){
         super(i,tower);
         this.tower = tower;
@@ -30,6 +33,12 @@ public class Opener extends Cup{
         cup.changeSize(this.getHeight()*10,this.getHeight()*10);
         empty = new Rectangle();
         empty.changeColor(Color.yellow);
+        r1 = new Circle();
+        r1.changeColor(Color.white);
+        r1.changeSize(10);
+        r2 = new Circle();
+        r2.changeSize(10);
+        r2.changeColor(Color.white);
         empty.changeSize((this.getHeight()*10)-10,(this.getHeight()*10)-20);
         int floor = maxHeight - height*10;
         int vertical = width/2;
@@ -37,6 +46,33 @@ public class Opener extends Cup{
         int yPosition = floor - this.getHeight()*10;
         cup.setPosition(xPosition,yPosition);
         empty.setPosition(xPosition+10,yPosition);
+        r1.setPosition(xPosition,yPosition);
+        r2.setPosition(xPosition+(this.getHeight()*10)-10,yPosition);
+    }
+    
+    /**
+     * Hacer visible la figura de taza.
+     */
+    @Override
+    public void makeVisible(){
+        cup.makeVisible();
+        empty.makeVisible();
+        r1.makeVisible();
+        r2.makeVisible();
+    }
+    
+    /**
+     * Hacer invisible la figura de taza.
+     */
+    @Override
+    public void makeInvisible(){
+        isVisible = false;
+        if(cup != null){
+            cup.makeInvisible();
+            empty.makeInvisible();
+            r1.makeInvisible();
+            r2.makeInvisible();
+        }
     }
     
     @Override

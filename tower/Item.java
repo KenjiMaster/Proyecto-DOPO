@@ -10,6 +10,7 @@ import java.util.List;
 public abstract class Item{
     
     protected boolean isVisible;
+    protected boolean isCovered;
     private int height;
     private int number;
     private Color color;
@@ -82,6 +83,10 @@ public abstract class Item{
      * @return si esta cubierta
      */
     public abstract boolean isCovered();
+    
+    public abstract void makeCovered(Lid lid);
+    
+    public abstract void makeIncovered();
     
     /**
      * Eliminar la figura del item

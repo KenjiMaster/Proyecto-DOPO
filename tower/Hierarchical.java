@@ -53,6 +53,15 @@ public class Hierarchical extends Cup{
     }
     
     /**
+     * Obtener tipo de item.
+     * @return tipo de item
+     */
+    @Override
+    public String getType(){
+        return "hierarchical";
+    }
+    
+    /**
      * Hacer visible la figura de taza.
      */
     @Override

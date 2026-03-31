@@ -51,6 +51,15 @@ public class Opener extends Cup{
     }
     
     /**
+     * Obtener tipo de item.
+     * @return tipo de item
+     */
+    @Override
+    public String getType(){
+        return "opener";
+    }
+    
+    /**
      * Hacer visible la figura de taza.
      */
     @Override

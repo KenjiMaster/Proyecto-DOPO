@@ -110,6 +110,7 @@ public class Tower{
             Cup cup = (Cup)items.get(indexLastCups.get(indexLastCups.size()-1));
             height -= cup.getHeight();
             if(cup.isCovered()){
+                cup.makeIncovered();
                 removeLid(cup.getNumber());
             }
             items.remove(cup);
@@ -133,6 +134,7 @@ public class Tower{
                 Cup cup = (Cup) items.get(cupIndex.get(i));
                 height -= cup.getHeight();
                 if(cup.isCovered()){
+                    cup.makeIncovered();
                     removeLid(cup.getNumber());
                 }
                 items.remove(cup);
@@ -151,19 +153,9 @@ public class Tower{
      * Agregar Lid i a la torre.
      * @param  i numero.
      */
-    public void pushLid(int i){
-        Lid lid = null;
+    public void pushLid(String type,int i){
         if(!lidIndex.containsKey(i)){
-            if(!items.isEmpty()){
-                Item item = items.get(items.size()-1);
-                if(item.getNumber() == i){
-                    lid = new Lid((Cup)item,this);
-                }else{
-                    lid = new Lid(i,this);
-                }
-            }else{
-                lid = new Lid(i,this);
-            }
+            Lid lid = getTypeLid(type,i);
             if(isVisible  && 10+(height*10) < maxHeight && lid.getWidth()*10 < width){
                     lid.makeVisible();
             }
@@ -171,6 +163,7 @@ public class Tower{
             items.add(lid);
             indexLastLids.add(items.size()-1);
             height += lid.getHeight();
+            redraw();
             lastOperation = true;
         }else{
             lastOperation = false;
@@ -178,11 +171,26 @@ public class Tower{
         }
     }
     
+    private Lid getTypeLid(String type, int i){
+        Lid lid = null;
+        if(type.equals("fearful")){
+            lid = new Fearful(i,this);
+        }else if(type.equals("crazy")){
+            lid = new Crazy(i,this);
+        }else if(type.equals("rainbow")){
+            lid = new Rainbow(i,this);
+        }
+        else{
+            lid = new Lid(i,this);
+        }
+        return lid;
+    }
+    
     /**
      * Eliminar ultima Lid.
      */
     public void popLid(){
-        if(!indexLastLids.isEmpty()){
+        if(!indexLastLids.isEmpty() && ((Lid)items.get(indexLastLids.get(indexLastLids.size()-1))).okRemove()){
             Lid lid = (Lid)items.get(indexLastLids.get(indexLastLids.size()-1));
             height -= lid.getHeight();
             items.remove(lid);
@@ -202,7 +210,7 @@ public class Tower{
      * @param  i numero
      */
     public void removeLid(int i){
-        if(lidIndex.containsKey(i)){
+        if(lidIndex.containsKey(i) && ((Lid) items.get(lidIndex.get(i))).okRemove() ){
             Lid lid = (Lid) items.get(lidIndex.get(i));
             height -= lid.getHeight();
             items.remove(lid);
@@ -271,7 +279,7 @@ public class Tower{
         if (a.getNumber() != b.getNumber()) {
             return b.getNumber() - a.getNumber();
         }
-        if (a.getType().equals("cup")) return -1;
+        if (a.getType().equals("cup") || a.getType().equals("opener") || a.getType().equals("hierarchical")) return -1;
         return 1;
         });
         redraw();
@@ -315,6 +323,8 @@ public class Tower{
             item.createShape(height, width, maxHeight);
             if(lastItem != null){
                 item.onStackedAbove(lastItem);
+            }else if(item.isCovered()){
+                item.makeIncovered();
             }
             height += item.getHeight();
             lastItem = item;
@@ -324,7 +334,7 @@ public class Tower{
     private void redraw(){
         if(!applyingSpecialMoves){
             reorden();
-            applicationSpecialMoves();   
+            applicationSpecialMoves();
         }
         reorden();
     }
@@ -412,11 +422,15 @@ public class Tower{
      * @param number numero del item
      */
     private Integer findIndexItem(String type, String number){
-        if(type.equals("cup")){
-            if(!cupIndex.containsKey(Integer.valueOf(number))) return null;
+        if(type.equals("cup") || type.equals("opener") || type.equals("hierarchical")){
+            if(!cupIndex.containsKey(Integer.valueOf(number))){
+                return null;
+            }
             return  cupIndex.get(Integer.valueOf(number));
         }else{
-            if(!lidIndex.containsKey(Integer.valueOf(number))) return null;
+            if(!lidIndex.containsKey(Integer.valueOf(number))){
+                return null;
+            }
             return lidIndex.get(Integer.valueOf(number));
         }
     }
@@ -429,8 +443,11 @@ public class Tower{
         List<Integer> numberCups = new ArrayList<>();
         List<Item> oldItems = new ArrayList<>(items);
         for(Item item : items){
-            if(item instanceof Cup) numberCups.add(item.getNumber());
-            else numberLids.add(item.getNumber()); 
+            if(item instanceof Cup){
+                numberCups.add(item.getNumber());
+            }else {
+                numberLids.add(item.getNumber());
+            } 
         }
         if(isVisible){
             canvasOperation = true;
@@ -440,17 +457,28 @@ public class Tower{
         clearTower();
         for(Item item : oldItems){
             if(item instanceof Cup){
-                pushCup("normal",item.getNumber());
+                pushCup(item.getType(),item.getNumber());
                 if(numberLids.contains(item.getNumber())){
-                    pushLid(item.getNumber());
+                    pushLid(searchLidType(item.getNumber(),oldItems),item.getNumber());
                     numberLids.remove((Integer)item.getNumber());
                 }
             }else{
-                if(numberLids.contains(item.getNumber()) && !numberCups.contains(item.getNumber())) pushLid(item.getNumber());
+                if(numberLids.contains(item.getNumber()) && !numberCups.contains(item.getNumber())){
+                    pushLid(item.getType(),item.getNumber());
+                }
             }
         }
         redraw();
         lastOperation = true;
+    }
+    
+    private String searchLidType(int i,List<Item> it){
+        for(Item item : it){
+            if(item instanceof Lid && item.getNumber()==i){
+                return item.getType();
+            }
+        }
+        return "normal";
     }
     
     /**

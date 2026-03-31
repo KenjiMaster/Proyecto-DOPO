@@ -10,7 +10,7 @@ import shapes.Rectangle;
  */
 public class Cup extends Item{
     private Lid lid;
-    private boolean isCovered;
+    
     protected Rectangle cup;
     protected Rectangle empty; 
     
@@ -90,8 +90,10 @@ public class Cup extends Item{
      * Tapar la cup.
      * @param  lid tapa de la cup
      */
+    @Override
     public void makeCovered(Lid lid){
         this.lid = lid;
+        this.lid.makeCovered(lid);
         empty.changeColor(Color.LIGHT_GRAY);
         isCovered = true;
     }
@@ -99,7 +101,9 @@ public class Cup extends Item{
     /**
      * Destapar la cup.
      */
+    @Override
     public void makeIncovered(){
+        this.lid.makeIncovered();
         this.lid = null;
         empty.changeColor(Color.WHITE);
         isCovered = false;
@@ -120,7 +124,9 @@ public class Cup extends Item{
      */
     @Override
     public void onStackedAbove(Item below){
-        
+        if(isCovered){
+            this.makeIncovered();
+        }
     }
     
     @Override

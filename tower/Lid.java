@@ -10,25 +10,8 @@ import shapes.Rectangle;
 public class Lid extends Item{
     
     private Cup cup;
-    private int width;
-    private Rectangle lid;
-    
-    /**
-     * Constructor de Lid.
-     * @param  cup cup de la tapa 
-     * @param  index indice en la torre
-     * @param  tower torre
-     */
-    public Lid(Cup cup,Tower tower){
-        this.makeInvisible();
-        this.setHeight(1);
-        this.width = cup.getHeight();
-        this.setNumber(cup.getNumber());
-        //usedNumbers.put(cup.getNumber(),index);
-        this.cup = cup;
-        this.cup.makeCovered(this);
-        createShape(tower.height(),Tower.width,Tower.maxHeight);
-    }
+    protected int width;
+    protected Rectangle lid;
     
     /**
      * Constructor de Lid.
@@ -42,6 +25,7 @@ public class Lid extends Item{
         this.width = 2*i - 1;
         this.setNumber(i);
         this.cup = null;
+        this.isCovered = false;
         //usedNumbers.put(i,index);
         createShape(tower.height(),Tower.width,Tower.maxHeight);
     }
@@ -111,7 +95,24 @@ public class Lid extends Item{
      */
     @Override
     public boolean isCovered(){
-        return false;
+        return isCovered;
+    }
+    
+    /**
+     * Tapar la cup.
+     * @param  lid tapa de la cup
+     */
+    @Override
+    public void makeCovered(Lid lid){
+        isCovered = true;
+    }
+    
+    /**
+     * Destapar la cup.
+     */
+    @Override
+    public void makeIncovered(){
+        isCovered = false;
     }
     
     /**
@@ -123,7 +124,6 @@ public class Lid extends Item{
         if (below instanceof Cup && below.getNumber() == this.getNumber()){
             ((Cup) below).makeCovered(this);
         }
-        
     }
     
     /**
@@ -133,6 +133,10 @@ public class Lid extends Item{
     @Override
     public String getType(){
         return "lid";
+    }
+    
+    public boolean okRemove(){
+        return true;
     }
     
     @Override

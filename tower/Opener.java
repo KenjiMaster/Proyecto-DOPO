@@ -15,6 +15,12 @@ public class Opener extends Cup{
     private Tower tower;
     private Circle r1;
     private Circle r2;
+    
+    /**
+     * Constructor de Opener.
+     * @param  i numero 
+     * @param  tower torre
+     */
     public Opener(int i, Tower tower){
         super(i,tower);
         this.tower = tower;
@@ -84,10 +90,12 @@ public class Opener extends Cup{
         }
     }
     
+    /**
+     * Hacer movimiento especial de la taza (Eliminar las tapas que estan debajo).
+     * @param items copia de la lista de items de la torre.
+     */
     @Override
     public void specialMove(List<Item> items){
-        //items.remove(items.size()-1);
-        //System.out.println(items);
         while(!items.isEmpty() && "lid".equals(items.get(items.size()-1).getType())){
             tower.removeLid(items.get(items.size()-1).getNumber());
             items.remove(items.size()-1);

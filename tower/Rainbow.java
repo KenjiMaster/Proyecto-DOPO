@@ -14,9 +14,16 @@ import shapes.Circle;
  * @version (a version number or a date)
  */
 public class Rainbow extends Lid{
+    
     private Tower tower;
     private Triangle r1;
     private Circle r2;
+    
+    /**
+     * Constructor de Crazy.
+     * @param  i numero 
+     * @param  tower torre
+     */
     public Rainbow(int i, Tower tower){
         super(i,tower);
         this.tower = tower;
@@ -80,6 +87,10 @@ public class Rainbow extends Lid{
         }
     }
     
+    /**
+     * Hacer movimiento especial de la tapa (Al tapar su taza se auto-elimina).
+     * @param items copia de la lista de items de la torre.
+     */
     @Override
     public void specialMove(List<Item> items){
         if(this.isCovered()){

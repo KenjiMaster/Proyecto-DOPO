@@ -15,6 +15,9 @@ public abstract class Figure{
     protected Color color;
     protected boolean isVisible;
     
+    /**
+     * Create a new figure.
+     */
     public Figure(){
         xPosition = 10;
         yPosition = 10;
@@ -139,7 +142,6 @@ public abstract class Figure{
     /*
      * Draw the rectangle with current specifications on screen.
      */
-
     protected abstract void draw();
 
     /*

@@ -16,7 +16,6 @@ public class Lid extends Item{
     /**
      * Constructor de Lid.
      * @param  i numero 
-     * @param  index indice en la torre
      * @param  tower torre
      */
     public Lid(int i, Tower tower){
@@ -26,7 +25,6 @@ public class Lid extends Item{
         this.setNumber(i);
         this.cup = null;
         this.isCovered = false;
-        //usedNumbers.put(i,index);
         createShape(tower.height(),Tower.width,Tower.maxHeight);
     }
     
@@ -81,12 +79,10 @@ public class Lid extends Item{
     @Override
     public void remove(){
         this.makeInvisible();
-        //usedNumbers.remove((Integer) this.getNumber());
         if(!(this.cup == null)){
             this.cup.makeIncovered();
             this.cup = null;
         }
-        
     }
     
     /**
@@ -135,10 +131,18 @@ public class Lid extends Item{
         return "lid";
     }
     
+    /**
+     * Obtener si la tapa de deja eliminar.
+     * @return verdadero para eliminar, falso para no eliminar.
+     */
     public boolean okRemove(){
         return true;
     }
     
+    /**
+     * Hacer movimiento especial de la tapa.
+     * @param items copia de la lista de items de la torre.
+     */
     @Override
     public void specialMove(List<Item> items){
         

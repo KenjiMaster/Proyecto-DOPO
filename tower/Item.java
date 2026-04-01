@@ -36,6 +36,10 @@ public abstract class Item{
      */
     public abstract void makeVisible();
     
+    /**
+     * Hacer movimiento especial del item.
+     * @param items copia de la lista de items de la torre.
+     */
     public abstract void specialMove(List<Item> items);
     
     /**
@@ -84,8 +88,15 @@ public abstract class Item{
      */
     public abstract boolean isCovered();
     
+    /**
+     * Tapar el item.
+     * @param lid tapa para cubrir
+     */
     public abstract void makeCovered(Lid lid);
     
+    /**
+     * Destapar el item.
+     */
     public abstract void makeIncovered();
     
     /**

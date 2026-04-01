@@ -11,10 +11,17 @@ import java.util.List;
  * @version (a version number or a date)
  */
 public class Fearful extends Lid{
+    
     private Tower tower;
     private Circle r1;
     private Circle r2;
     private boolean foundedCup;
+    
+    /**
+     * Constructor de Fearcul.
+     * @param  i numero 
+     * @param  tower torre
+     */
     public Fearful(int i, Tower tower){
         super(i,tower);
         this.tower = tower;
@@ -79,6 +86,10 @@ public class Fearful extends Lid{
         }
     }
     
+    /**
+     * Obtener si la tapa de deja eliminar.
+     * @return verdadero para eliminar, falso para no eliminar.
+     */
     @Override
     public boolean okRemove(){
         if(isCovered){
@@ -87,6 +98,10 @@ public class Fearful extends Lid{
         return true;
     }
     
+    /**
+     * Hacer movimiento especial de la tapa (No entra si su taza no esta, y al tapar no se deja eliminar).
+     * @param items copia de la lista de items de la torre.
+     */
     @Override
     public void specialMove(List<Item> items){
         for(Item item : items){

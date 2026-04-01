@@ -17,12 +17,10 @@ public class Cup extends Item{
     /**
      * Constructor de cup.
      * @param  i numero 
-     * @param  index indice en la torre
      * @param  tower torre
      */
     public Cup(int i, Tower tower){
         this.setNumber(i);
-        //usedNumbers.put(i,index);
         this.setHeight(2*i - 1);
         this.makeInvisible();
         isCovered = false;
@@ -78,7 +76,6 @@ public class Cup extends Item{
      */
     @Override
     public void remove(){
-        //usedNumbers.remove((Integer) this.getNumber());
         this.makeInvisible();
         if(isCovered){
             lid.remove();
@@ -129,6 +126,10 @@ public class Cup extends Item{
         }
     }
     
+    /**
+     * Hacer movimiento especial de la taza.
+     * @param items copia de la lista de items de la torre.
+     */
     @Override
     public void specialMove(List<Item> items){
         

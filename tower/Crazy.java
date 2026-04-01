@@ -12,9 +12,16 @@ import java.util.List;
  * @version (a version number or a date)
  */
 public class Crazy extends Lid{
+    
     private Tower tower;
     private Triangle r1;
     private Triangle r2;
+    
+    /**
+     * Constructor de Crazy.
+     * @param  i numero 
+     * @param  tower torre
+     */
     public Crazy(int i, Tower tower){
         super(i,tower);
         this.tower = tower;
@@ -78,6 +85,10 @@ public class Crazy extends Lid{
         }
     }
     
+    /**
+     * Hacer movimiento especial de la tapa (Al tapar su taza se ubica debajo de esta).
+     * @param items copia de la lista de items de la torre.
+     */
     @Override
     public void specialMove(List<Item> items){
         if(this.isCovered()){

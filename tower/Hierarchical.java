@@ -17,6 +17,12 @@ public class Hierarchical extends Cup{
     private Tower tower;
     private Triangle r1;
     private Triangle r2;
+    
+    /**
+     * Constructor de Hierarchical.
+     * @param  i numero 
+     * @param  tower torre
+     */
     public Hierarchical(int i, Tower tower){
         super(i,tower);
         this.tower = tower;
@@ -86,9 +92,12 @@ public class Hierarchical extends Cup{
         }
     }
     
+    /**
+     * Hacer movimiento especial de la taza (Hace cambios con los items mas pequeños).
+     * @param items copia de la lista de items de la torre.
+     */
     @Override
     public void specialMove(List<Item> items){
-        //items.remove(items.size()-1);
         Collections.reverse(items);
         for(Item i : items){
             if(i.getNumber() < this.getNumber()){

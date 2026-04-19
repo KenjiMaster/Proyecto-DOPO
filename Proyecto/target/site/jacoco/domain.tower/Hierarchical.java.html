@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Hierarchical.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">StakingItems</a> &gt; <a href="index.source.html" class="el_package">domain.tower</a> &gt; <span class="el_source">Hierarchical.java</span></div><h1>Hierarchical.java</h1><pre class="source lang-java linenums">package domain.tower;
+
+import java.util.List;
+import java.util.Collections;
+import java.awt.Color;
+import domain.shapes.Rectangle;
+import domain.shapes.Triangle;
+
+
+/**
+ * Write a description of class Hierarchical here.
+ * 
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
+public class Hierarchical extends Cup{
+    private Tower tower;
+    private Triangle r1;
+    private Triangle r2;
+    
+    /**
+     * Constructor de Hierarchical.
+     * @param  i numero 
+     * @param  tower torre
+     */
+    public Hierarchical(int i, Tower tower){
+<span class="fc" id="L27">        super(i,tower);</span>
+<span class="fc" id="L28">        this.tower = tower;</span>
+<span class="fc" id="L29">    }</span>
+    
+    /**
+     * Creador forma de taza.
+     * @param  height altura de la torre 
+     * @param  width ancho de la torre
+     * @param  maxHeight altura maxima de la torre
+     */
+    @Override
+    public void createShape(int height,int width,int maxHeight){
+<span class="fc" id="L39">        cup = new Rectangle();</span>
+<span class="fc" id="L40">        cup.changeColor(this.makeColor(this.getNumber()));</span>
+<span class="fc" id="L41">        cup.changeSize(this.getHeight()*10,this.getHeight()*10);</span>
+<span class="fc" id="L42">        empty = new Rectangle();</span>
+<span class="fc" id="L43">        empty.changeColor(Color.blue);</span>
+<span class="fc" id="L44">        r1 = new Triangle();</span>
+<span class="fc" id="L45">        r1.changeColor(Color.white);</span>
+<span class="fc" id="L46">        r1.changeSize(10,10);</span>
+<span class="fc" id="L47">        r2 = new Triangle();</span>
+<span class="fc" id="L48">        r2.changeColor(Color.white);</span>
+<span class="fc" id="L49">        r2.changeSize(10,10);</span>
+<span class="fc" id="L50">        empty.changeSize((this.getHeight()*10)-10,(this.getHeight()*10)-20);</span>
+<span class="fc" id="L51">        int floor = maxHeight - height*10;</span>
+<span class="fc" id="L52">        int vertical = width/2;</span>
+<span class="fc" id="L53">        int xPosition = vertical-(this.getHeight()*5);</span>
+<span class="fc" id="L54">        int yPosition = floor - this.getHeight()*10;</span>
+<span class="fc" id="L55">        cup.setPosition(xPosition,yPosition);</span>
+<span class="fc" id="L56">        empty.setPosition(xPosition+10,yPosition);</span>
+<span class="fc" id="L57">        r1.setPosition(xPosition+5,yPosition);</span>
+<span class="fc" id="L58">        r2.setPosition(xPosition+(this.getHeight()*10)-5,yPosition);</span>
+<span class="fc" id="L59">    }</span>
+    
+    /**
+     * Obtener tipo de item.
+     * @return tipo de item
+     */
+    @Override
+    public String getType(){
+<span class="fc" id="L67">        return &quot;hierarchical&quot;;</span>
+    }
+    
+    /**
+     * Hacer visible la figura de taza.
+     */
+    @Override
+    public void makeVisible(){
+<span class="fc" id="L75">        cup.makeVisible();</span>
+<span class="fc" id="L76">        empty.makeVisible();</span>
+<span class="fc" id="L77">        r1.makeVisible();</span>
+<span class="fc" id="L78">        r2.makeVisible();</span>
+<span class="fc" id="L79">    }</span>
+    
+    /**
+     * Hacer invisible la figura de taza.
+     */
+    @Override
+    public void makeInvisible(){
+<span class="fc" id="L86">        isVisible = false;</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">        if(cup != null){</span>
+<span class="fc" id="L88">            cup.makeInvisible();</span>
+<span class="fc" id="L89">            empty.makeInvisible();</span>
+<span class="fc" id="L90">            r1.makeInvisible();</span>
+<span class="fc" id="L91">            r2.makeInvisible();</span>
+        }
+<span class="fc" id="L93">    }</span>
+    
+    /**
+     * Hacer movimiento especial de la taza (Hace cambios con los items mas pequeños).
+     * @param items copia de la lista de items de la torre.
+     */
+    @Override
+    public void specialMove(List&lt;Item&gt; items){
+<span class="fc" id="L101">        Collections.reverse(items);</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">        for(Item i : items){</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">            if(i.getNumber() &lt; this.getNumber()){</span>
+<span class="fc" id="L104">                String[] i1 = new String[] {&quot;cup&quot;,String.valueOf(this.getNumber())};</span>
+<span class="fc" id="L105">                String[] i2 = new String[] {i.getType(),String.valueOf(i.getNumber())};</span>
+<span class="fc" id="L106">                tower.swap(i1,i2);</span>
+            }else{
+                break;
+            }
+        }
+<span class="fc" id="L111">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

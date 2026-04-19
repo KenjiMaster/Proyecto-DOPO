@@ -1,0 +1,553 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Tower.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">StakingItems</a> &gt; <a href="index.source.html" class="el_package">domain.tower</a> &gt; <span class="el_source">Tower.java</span></div><h1>Tower.java</h1><pre class="source lang-java linenums">package domain.tower;
+import domain.shapes.*;
+import java.util.*;
+import java.awt.Color;
+import javax.swing.JOptionPane;
+/**
+ * Clase de representacion de Tower.
+ * 
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
+public class Tower{
+    
+    public static int maxHeight;
+    public static int width;
+    private int height;
+    private Map&lt;Integer,Integer&gt; cupIndex;
+    private Map&lt;Integer,Integer&gt; lidIndex;
+    private List&lt;Integer&gt; indexLastCups;
+    private List&lt;Integer&gt; indexLastLids;
+    private List&lt;Item&gt; items;
+    private List&lt;Rectangle&gt; marks;
+    private Canvas canvas;
+    private boolean isVisible;
+    private boolean canvasOperation;
+    private boolean lastOperation;
+<span class="fc" id="L27">    private boolean applyingSpecialMoves = false;</span>
+    
+    
+    
+    /**
+     * Constructor de Tower.
+     * @param  width ancho del canvas
+     * @param  height alto del canvas
+     */
+<span class="fc" id="L36">    public Tower(int width, int maxHeight){</span>
+<span class="fc" id="L37">        this.width = width;</span>
+<span class="fc" id="L38">        this.maxHeight = maxHeight;</span>
+<span class="fc" id="L39">        canvas = Canvas.getCanvas(width,maxHeight);</span>
+<span class="fc" id="L40">        canvas.setVisible(false);</span>
+<span class="fc" id="L41">        items = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L42">        indexLastCups = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L43">        indexLastLids = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L44">        cupIndex = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L45">        lidIndex = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L46">        isVisible = false;</span>
+<span class="fc" id="L47">        canvasOperation = false;</span>
+<span class="fc" id="L48">        lastOperation = true;</span>
+<span class="fc" id="L49">        marks = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">        for(int i=0;i&lt;maxHeight;i+=10){</span>
+<span class="fc" id="L51">            Rectangle rectangle = new Rectangle();</span>
+<span class="fc" id="L52">            rectangle.changeColor(Color.black);</span>
+<span class="fc" id="L53">            rectangle.setPosition(0,i);</span>
+<span class="fc" id="L54">            rectangle.changeSize(1,10);</span>
+<span class="fc" id="L55">            marks.add(rectangle);</span>
+        }
+<span class="fc" id="L57">    }</span>
+    
+    /**
+     * Constructor de Tower.
+     * @param  cups cantidad de copas iniciales
+     */
+    public Tower(int cups){
+<span class="fc" id="L64">        this(300,300);</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        for(int i=1; i&lt;=cups; i++){</span>
+<span class="fc" id="L66">            pushCup(&quot;normal&quot;,i);</span>
+        }
+<span class="fc" id="L68">    }</span>
+    
+    /**
+     * Agregar una Cup i a la torre.
+     * @param  i numero.
+     */
+    public void pushCup(String type,int i){
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        if(!cupIndex.containsKey((Integer)i)){</span>
+<span class="fc" id="L76">            Cup cup = getTypeCup(type,i);</span>
+<span class="fc" id="L77">            cupIndex.put(i,items.size());</span>
+<span class="fc" id="L78">            items.add(cup);</span>
+<span class="fc" id="L79">            indexLastCups.add(items.size()-1);</span>
+<span class="pc bpc" id="L80" title="1 of 4 branches missed.">            if(isVisible &amp;&amp; (height+(2*i-1))*10 &lt; maxHeight){</span>
+<span class="fc" id="L81">                cup.makeVisible();</span>
+            }
+<span class="fc" id="L83">            height += cup.getHeight();</span>
+<span class="fc" id="L84">            redraw();</span>
+<span class="fc" id="L85">            lastOperation = true;</span>
+<span class="fc" id="L86">        }else{</span>
+<span class="fc" id="L87">            lastOperation = false;</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">            if(isVisible) JOptionPane.showMessageDialog(null,&quot;No se pudo crear Cup: &quot;+i);</span>
+        }
+<span class="fc" id="L90">    }</span>
+    
+    private Cup getTypeCup(String type, int i){
+<span class="fc" id="L93">        Cup cup = null;</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        if(type.equals(&quot;opener&quot;)){</span>
+<span class="fc" id="L95">            cup = new Opener(i,this);</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">        }else if(type.equals(&quot;hierarchical&quot;)){</span>
+<span class="fc" id="L97">            cup = new Hierarchical(i,this);</span>
+<span class="fc" id="L98">        }</span>
+        else{
+<span class="fc" id="L100">            cup = new Cup(i,this);</span>
+        }
+<span class="fc" id="L102">        return cup;</span>
+    }
+    
+    /**
+     * Eliminar ultima Cup.
+     */
+    public void popCup(){
+<span class="fc bfc" id="L109" title="All 2 branches covered.">        if(!indexLastCups.isEmpty()){</span>
+<span class="fc" id="L110">            Cup cup = (Cup)items.get(indexLastCups.get(indexLastCups.size()-1));</span>
+<span class="fc" id="L111">            height -= cup.getHeight();</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">            if(cup.isCovered()){</span>
+<span class="nc" id="L113">                cup.makeIncovered();</span>
+<span class="nc" id="L114">                removeLid(cup.getNumber());</span>
+            }
+<span class="fc" id="L116">            items.remove(cup);</span>
+<span class="fc" id="L117">            indexLastCups.remove((Integer) cup.getNumber());</span>
+<span class="fc" id="L118">            cupIndex.remove((Integer) cup.getNumber());</span>
+<span class="fc" id="L119">            cup.remove();</span>
+<span class="fc" id="L120">            redraw();</span>
+<span class="fc" id="L121">            lastOperation = true;</span>
+<span class="fc" id="L122">        }else{</span>
+<span class="fc" id="L123">            lastOperation = false;</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">            if(isVisible) JOptionPane.showMessageDialog(null,&quot;No se pudo eliminar Cup&quot;);</span>
+        }
+<span class="fc" id="L126">    }</span>
+    
+    /**
+     * Eliminar Cup i.
+     * @param  i numero.
+     */
+    public void removeCup(int i){
+<span class="fc bfc" id="L133" title="All 2 branches covered.">            if(cupIndex.containsKey(i)){</span>
+<span class="fc" id="L134">                Cup cup = (Cup) items.get(cupIndex.get(i));</span>
+<span class="fc" id="L135">                height -= cup.getHeight();</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">                if(cup.isCovered()){</span>
+<span class="nc" id="L137">                    cup.makeIncovered();</span>
+<span class="nc" id="L138">                    removeLid(cup.getNumber());</span>
+                }
+<span class="fc" id="L140">                items.remove(cup);</span>
+<span class="fc" id="L141">                indexLastCups.remove((Integer)cup.getNumber());</span>
+<span class="fc" id="L142">                cupIndex.remove((Integer) cup.getNumber());</span>
+<span class="fc" id="L143">                cup.remove();</span>
+<span class="fc" id="L144">                redraw();</span>
+<span class="fc" id="L145">                lastOperation = true;</span>
+<span class="fc" id="L146">            }else{</span>
+<span class="fc" id="L147">                lastOperation = false;</span>
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">                if(isVisible) JOptionPane.showMessageDialog(null,&quot;No se pudo eliminar Cup: &quot;+i);</span>
+            }
+<span class="fc" id="L150">    }</span>
+    
+    /**
+     * Agregar Lid i a la torre.
+     * @param  i numero.
+     */
+    public void pushLid(String type,int i){
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">        if(!lidIndex.containsKey(i)){</span>
+<span class="fc" id="L158">            Lid lid = getTypeLid(type,i);</span>
+<span class="pc bpc" id="L159" title="2 of 6 branches missed.">            if(isVisible  &amp;&amp; 10+(height*10) &lt; maxHeight &amp;&amp; lid.getWidth()*10 &lt; width){</span>
+<span class="fc" id="L160">                    lid.makeVisible();</span>
+            }
+<span class="fc" id="L162">            lidIndex.put(i,items.size());</span>
+<span class="fc" id="L163">            items.add(lid);</span>
+<span class="fc" id="L164">            indexLastLids.add(items.size()-1);</span>
+<span class="fc" id="L165">            height += lid.getHeight();</span>
+<span class="fc" id="L166">            redraw();</span>
+<span class="fc" id="L167">            lastOperation = true;</span>
+<span class="fc" id="L168">        }else{</span>
+<span class="nc" id="L169">            lastOperation = false;</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">            if(isVisible) JOptionPane.showMessageDialog(null,&quot;No se pudo crear Lid: &quot;+i);</span>
+        }
+<span class="fc" id="L172">    }</span>
+    
+    private Lid getTypeLid(String type, int i){
+<span class="fc" id="L175">        Lid lid = null;</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">        if(type.equals(&quot;fearful&quot;)){</span>
+<span class="fc" id="L177">            lid = new Fearful(i,this);</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">        }else if(type.equals(&quot;crazy&quot;)){</span>
+<span class="fc" id="L179">            lid = new Crazy(i,this);</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">        }else if(type.equals(&quot;rainbow&quot;)){</span>
+<span class="fc" id="L181">            lid = new Rainbow(i,this);</span>
+<span class="fc" id="L182">        }</span>
+        else{
+<span class="fc" id="L184">            lid = new Lid(i,this);</span>
+        }
+<span class="fc" id="L186">        return lid;</span>
+    }
+    
+    /**
+     * Eliminar ultima Lid.
+     */
+    public void popLid(){
+<span class="pc bpc" id="L193" title="1 of 4 branches missed.">        if(!indexLastLids.isEmpty() &amp;&amp; ((Lid)items.get(indexLastLids.get(indexLastLids.size()-1))).okRemove()){</span>
+<span class="fc" id="L194">            Lid lid = (Lid)items.get(indexLastLids.get(indexLastLids.size()-1));</span>
+<span class="fc" id="L195">            height -= lid.getHeight();</span>
+<span class="fc" id="L196">            items.remove(lid);</span>
+<span class="fc" id="L197">            indexLastLids.remove((Integer) lid.getNumber());</span>
+<span class="fc" id="L198">            lidIndex.remove((Integer) lid.getNumber());</span>
+<span class="fc" id="L199">            lid.remove();</span>
+<span class="fc" id="L200">            redraw();</span>
+<span class="fc" id="L201">            lastOperation = true;</span>
+<span class="fc" id="L202">        }else{</span>
+<span class="fc" id="L203">            lastOperation = false;</span>
+<span class="pc bpc" id="L204" title="1 of 2 branches missed.">            if(isVisible) JOptionPane.showMessageDialog(null,&quot;No se pudo eliminar Lid&quot;);</span>
+        }
+<span class="fc" id="L206">    }</span>
+    
+    /**
+     * Eliminar Lid i.
+     * @param  i numero
+     */
+    public void removeLid(int i){
+<span class="pc bpc" id="L213" title="1 of 4 branches missed.">        if(lidIndex.containsKey(i) &amp;&amp; ((Lid) items.get(lidIndex.get(i))).okRemove() ){</span>
+<span class="fc" id="L214">            Lid lid = (Lid) items.get(lidIndex.get(i));</span>
+<span class="fc" id="L215">            height -= lid.getHeight();</span>
+<span class="fc" id="L216">            items.remove(lid);</span>
+<span class="fc" id="L217">            indexLastLids.remove((Integer) lid.getNumber());</span>
+<span class="fc" id="L218">            lidIndex.remove((Integer) lid.getNumber());</span>
+<span class="fc" id="L219">            lid.remove();</span>
+<span class="fc" id="L220">            redraw();</span>
+<span class="fc" id="L221">            lastOperation = true;</span>
+<span class="fc" id="L222">        }else{</span>
+<span class="fc" id="L223">            lastOperation = false;</span>
+<span class="pc bpc" id="L224" title="1 of 2 branches missed.">            if(isVisible) JOptionPane.showMessageDialog(null,&quot;No se pudo eliminar Lid: &quot;+i);</span>
+        }
+<span class="fc" id="L226">    }</span>
+    
+    /**
+     * Obtener altura actual de la torre.
+     * @return numero de altura de la torre
+     */
+    public int height(){
+<span class="fc" id="L233">        return height;</span>
+    }
+    
+    /**
+     * Hacer visible la torre.
+     */
+    public void makeVisible(){
+<span class="fc" id="L240">        int tempHeight = 0;</span>
+<span class="fc bfc" id="L241" title="All 2 branches covered.">        for (Item item : items) {</span>
+<span class="pc bpc" id="L242" title="1 of 2 branches missed.">            if ((tempHeight+item.getHeight())*10 &lt; maxHeight) {</span>
+<span class="fc" id="L243">               item.makeVisible(); </span>
+            }
+<span class="fc" id="L245">            tempHeight += item.getHeight();</span>
+        } 
+<span class="fc bfc" id="L247" title="All 2 branches covered.">        for(Rectangle rectangle : marks){</span>
+<span class="fc" id="L248">            rectangle.makeVisible();</span>
+        }
+<span class="fc" id="L250">        isVisible = true;</span>
+<span class="fc" id="L251">        canvas.setVisible(true);</span>
+<span class="fc" id="L252">        canvasOperation = false;</span>
+<span class="fc" id="L253">        lastOperation = true;</span>
+<span class="fc" id="L254">    }</span>
+    
+    /**
+     * Hacer invisible la torre.
+     */
+    public void makeInvisible(){
+<span class="fc bfc" id="L260" title="All 2 branches covered.">        for (Item item : items) {</span>
+<span class="fc" id="L261">            item.makeInvisible();</span>
+        }
+<span class="fc bfc" id="L263" title="All 2 branches covered.">        for(Rectangle rectangle : marks){</span>
+<span class="fc" id="L264">            rectangle.makeInvisible();</span>
+        }
+<span class="fc" id="L266">        isVisible = false;</span>
+<span class="fc bfc" id="L267" title="All 2 branches covered.">        if(!canvasOperation){</span>
+<span class="fc" id="L268">            canvas.setVisible(false);</span>
+        }
+<span class="fc" id="L270">        canvasOperation = false;</span>
+<span class="fc" id="L271">        lastOperation = true;</span>
+<span class="fc" id="L272">    }</span>
+    
+    /**
+     * Ordena la torre de Mayor a menor.
+     */
+    public void orderTower(){
+<span class="nc" id="L278">        Collections.sort(items, (a, b) -&gt; {</span>
+<span class="nc bnc" id="L279" title="All 2 branches missed.">        if (a.getNumber() != b.getNumber()) {</span>
+<span class="nc" id="L280">            return b.getNumber() - a.getNumber();</span>
+        }
+<span class="nc bnc" id="L282" title="All 6 branches missed.">        if (a.getType().equals(&quot;cup&quot;) || a.getType().equals(&quot;opener&quot;) || a.getType().equals(&quot;hierarchical&quot;)) return -1;</span>
+<span class="nc" id="L283">        return 1;</span>
+        });
+<span class="nc" id="L285">        redraw();</span>
+<span class="nc" id="L286">        lastOperation = true;</span>
+<span class="nc" id="L287">    }</span>
+    
+    /**
+     * Invierte la torre.
+     */
+    public void reverseTower(){
+<span class="fc" id="L293">        Collections.reverse(items);</span>
+<span class="fc" id="L294">        redraw();</span>
+<span class="fc" id="L295">        lastOperation = true;</span>
+<span class="fc" id="L296">    }</span>
+    
+    /**
+     * Redibujado de la torre.
+     */
+    private void reorden(){
+<span class="fc bfc" id="L302" title="All 2 branches covered.">        if(isVisible){</span>
+<span class="fc" id="L303">            canvasOperation = true;</span>
+<span class="fc" id="L304">            makeInvisible();</span>
+<span class="fc" id="L305">            isVisible = true;</span>
+        }
+<span class="fc" id="L307">        recalculado();</span>
+<span class="fc bfc" id="L308" title="All 2 branches covered.">        if(isVisible){</span>
+<span class="fc" id="L309">            makeVisible();</span>
+        }
+<span class="fc" id="L311">    }</span>
+    
+    private void recalculado(){
+<span class="fc" id="L314">        indexLastCups.clear();</span>
+<span class="fc" id="L315">        indexLastLids.clear();</span>
+<span class="fc" id="L316">        cupIndex.clear();</span>
+<span class="fc" id="L317">        lidIndex.clear();</span>
+<span class="fc" id="L318">        height = 0;</span>
+<span class="fc" id="L319">        Item lastItem = null;</span>
+<span class="fc bfc" id="L320" title="All 2 branches covered.">        for(int i = 0; i &lt; items.size(); i++){</span>
+<span class="fc" id="L321">            Item item = items.get(i);</span>
+<span class="fc" id="L322">            item.register(this, i);</span>
+<span class="fc" id="L323">            item.createShape(height, width, maxHeight);</span>
+<span class="fc bfc" id="L324" title="All 2 branches covered.">            if(lastItem != null){</span>
+<span class="fc" id="L325">                item.onStackedAbove(lastItem);</span>
+<span class="fc bfc" id="L326" title="All 2 branches covered.">            }else if(item.isCovered()){</span>
+<span class="fc" id="L327">                item.makeIncovered();</span>
+            }
+<span class="fc" id="L329">            height += item.getHeight();</span>
+<span class="fc" id="L330">            lastItem = item;</span>
+        }
+<span class="fc" id="L332">    }</span>
+    
+    private void redraw(){
+<span class="fc bfc" id="L335" title="All 2 branches covered.">        if(!applyingSpecialMoves){</span>
+<span class="fc" id="L336">            reorden();</span>
+<span class="fc" id="L337">            applicationSpecialMoves();</span>
+        }
+<span class="fc" id="L339">        reorden();</span>
+<span class="fc" id="L340">    }</span>
+    
+    private void applicationSpecialMoves(){
+<span class="fc" id="L343">        applyingSpecialMoves = true;</span>
+<span class="fc bfc" id="L344" title="All 2 branches covered.">        for(int i = 0; i &lt; items.size(); i++){</span>
+<span class="fc" id="L345">            Item item = items.get(i);</span>
+<span class="fc" id="L346">            item.specialMove(new ArrayList&lt;&gt;(items.subList(0,i)));</span>
+        }
+<span class="fc" id="L348">        applyingSpecialMoves = false;</span>
+<span class="fc" id="L349">    }</span>
+    
+    /**
+     * Numeros de las Cups tapadas ordenadas de menor a mayor.
+     * @return arreglo de los numeros de las tazas tapadas.
+     */
+    public int[] lidedCups(){
+<span class="fc" id="L356">        int countLidedCups = 0;</span>
+<span class="fc" id="L357">        List&lt;Integer&gt; listLidedCups = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L358" title="All 2 branches covered.">        for(Item item : items){</span>
+<span class="fc bfc" id="L359" title="All 4 branches covered.">            if(item.isCovered() &amp;&amp; item instanceof Cup){</span>
+<span class="fc" id="L360">                countLidedCups++;</span>
+<span class="fc" id="L361">                listLidedCups.add(item.getNumber()); </span>
+            }
+        }
+<span class="fc" id="L364">        int[] resLidedCups = new int[countLidedCups];</span>
+<span class="fc" id="L365">        Collections.sort(listLidedCups);</span>
+<span class="fc bfc" id="L366" title="All 2 branches covered.">        for(int i=0;i&lt;countLidedCups;i++){</span>
+<span class="fc" id="L367">            resLidedCups[i] = listLidedCups.get(i);</span>
+        }
+<span class="fc" id="L369">        lastOperation = true;</span>
+<span class="fc" id="L370">        return resLidedCups;</span>
+    }
+    
+    /**
+     * Matriz de Items con su tipo y numero, desde la base a la punta.
+     * @param matriz con los Items
+     */
+    public String[][] stackingItems(){
+<span class="fc" id="L378">        String[][] resStackingItems = new String[items.size()][2];</span>
+<span class="fc bfc" id="L379" title="All 2 branches covered.">        for(int i=0;i&lt;items.size();i++){</span>
+<span class="fc" id="L380">            Item item = items.get(i);</span>
+<span class="fc" id="L381">            resStackingItems[i][0] = item.getType();</span>
+<span class="fc" id="L382">            resStackingItems[i][1] = String.valueOf(item.getNumber());</span>
+        }
+<span class="fc" id="L384">        lastOperation = true;</span>
+<span class="fc" id="L385">        return resStackingItems;</span>
+    }
+    
+    /**
+     * Intercambio de items de la torre.
+     * @param o1 item 1
+     * @param o2 item 2
+     */
+    public void swap(String[] o1, String[] o2){
+<span class="pc bpc" id="L394" title="1 of 2 branches missed.">        if(!items.isEmpty()){</span>
+<span class="fc" id="L395">            Integer indexItem1 = findIndexItem(o1[0],o1[1]);</span>
+<span class="fc" id="L396">            Integer indexItem2 = findIndexItem(o2[0],o2[1]);</span>
+<span class="fc bfc" id="L397" title="All 4 branches covered.">            if(indexItem1 == null || indexItem2 == null){</span>
+<span class="fc" id="L398">                lastOperation = false ;</span>
+<span class="pc bpc" id="L399" title="1 of 2 branches missed.">                if(isVisible){</span>
+<span class="nc" id="L400">                    JOptionPane.showMessageDialog(null,&quot;No se encontraron los elementos&quot;);</span>
+                }
+<span class="nc" id="L402">            }</span>
+            else{
+<span class="fc" id="L404">                Item item1 = items.get(indexItem1);</span>
+<span class="fc" id="L405">                Item item2 = items.get(indexItem2);</span>
+<span class="fc" id="L406">                items.set(indexItem1,item2);</span>
+<span class="fc" id="L407">                items.set(indexItem2,item1);</span>
+<span class="fc" id="L408">                redraw();</span>
+<span class="fc" id="L409">                lastOperation = true; </span>
+            }
+<span class="fc" id="L411">        }else{</span>
+<span class="nc" id="L412">            lastOperation = false;</span>
+<span class="nc bnc" id="L413" title="All 2 branches missed.">            if(isVisible){</span>
+<span class="nc" id="L414">                JOptionPane.showMessageDialog(null,&quot;No hay elementos en la torre&quot;); </span>
+            }
+        }
+<span class="fc" id="L417">    }</span>
+    
+    /**
+     * Encontrar el indice de un item en la torre.
+     * @param type tipo de item cup/lid
+     * @param number numero del item
+     */
+    private Integer findIndexItem(String type, String number){
+<span class="pc bpc" id="L425" title="1 of 6 branches missed.">        if(type.equals(&quot;cup&quot;) || type.equals(&quot;opener&quot;) || type.equals(&quot;hierarchical&quot;)){</span>
+<span class="fc bfc" id="L426" title="All 2 branches covered.">            if(!cupIndex.containsKey(Integer.valueOf(number))){</span>
+<span class="fc" id="L427">                return null;</span>
+            }
+<span class="fc" id="L429">            return  cupIndex.get(Integer.valueOf(number));</span>
+        }else{
+<span class="pc bpc" id="L431" title="1 of 2 branches missed.">            if(!lidIndex.containsKey(Integer.valueOf(number))){</span>
+<span class="nc" id="L432">                return null;</span>
+            }
+<span class="fc" id="L434">            return lidIndex.get(Integer.valueOf(number));</span>
+        }
+    }
+    
+    /**
+     * Cubrir tazas si la torre tiene sus tapas.
+     */
+    public void cover(){
+<span class="fc" id="L442">        List&lt;Integer&gt; numberLids = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L443">        List&lt;Integer&gt; numberCups = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L444">        List&lt;Item&gt; oldItems = new ArrayList&lt;&gt;(items);</span>
+<span class="fc bfc" id="L445" title="All 2 branches covered.">        for(Item item : items){</span>
+<span class="fc bfc" id="L446" title="All 2 branches covered.">            if(item instanceof Cup){</span>
+<span class="fc" id="L447">                numberCups.add(item.getNumber());</span>
+<span class="fc" id="L448">            }else {</span>
+<span class="fc" id="L449">                numberLids.add(item.getNumber());</span>
+            } 
+        }
+<span class="fc bfc" id="L452" title="All 2 branches covered.">        if(isVisible){</span>
+<span class="fc" id="L453">            canvasOperation = true;</span>
+<span class="fc" id="L454">            makeInvisible();</span>
+<span class="fc" id="L455">            isVisible = true;</span>
+        }
+<span class="fc" id="L457">        clearTower();</span>
+<span class="fc bfc" id="L458" title="All 2 branches covered.">        for(Item item : oldItems){</span>
+<span class="fc bfc" id="L459" title="All 2 branches covered.">            if(item instanceof Cup){</span>
+<span class="fc" id="L460">                pushCup(item.getType(),item.getNumber());</span>
+<span class="fc bfc" id="L461" title="All 2 branches covered.">                if(numberLids.contains(item.getNumber())){</span>
+<span class="fc" id="L462">                    pushLid(searchLidType(item.getNumber(),oldItems),item.getNumber());</span>
+<span class="fc" id="L463">                    numberLids.remove((Integer)item.getNumber());</span>
+                }
+<span class="fc" id="L465">            }else{</span>
+<span class="pc bpc" id="L466" title="1 of 4 branches missed.">                if(numberLids.contains(item.getNumber()) &amp;&amp; !numberCups.contains(item.getNumber())){</span>
+<span class="fc" id="L467">                    pushLid(item.getType(),item.getNumber());</span>
+                }
+            }
+        }
+<span class="fc" id="L471">        redraw();</span>
+<span class="fc" id="L472">        lastOperation = true;</span>
+<span class="fc" id="L473">    }</span>
+    
+    private String searchLidType(int i,List&lt;Item&gt; it){
+<span class="pc bpc" id="L476" title="1 of 2 branches missed.">        for(Item item : it){</span>
+<span class="fc bfc" id="L477" title="All 4 branches covered.">            if(item instanceof Lid &amp;&amp; item.getNumber()==i){</span>
+<span class="fc" id="L478">                return item.getType();</span>
+            }
+        }
+<span class="nc" id="L481">        return &quot;normal&quot;;</span>
+    }
+    
+    /**
+     * Limpiar todos los contenedores
+     */
+    private void clearTower(){
+<span class="fc" id="L488">        items.clear();</span>
+<span class="fc" id="L489">        indexLastLids.clear();</span>
+<span class="fc" id="L490">        indexLastCups.clear();</span>
+<span class="fc" id="L491">        cupIndex.clear();</span>
+<span class="fc" id="L492">        lidIndex.clear();</span>
+<span class="fc" id="L493">    }</span>
+    
+    /**
+     * Aconsejar cambio para reducir el tamaño de la torre.
+     * @return pareja a itercambiar o null si no hay cambio.
+     */
+    public String[][] swapToReduce() {
+<span class="fc bfc" id="L500" title="All 2 branches covered.">        for (int i = 0; i &lt; items.size() - 1; i++) {</span>
+<span class="fc" id="L501">            Item first = items.get(i);</span>
+<span class="fc" id="L502">            Item second = items.get(i + 1);</span>
+<span class="pc bpc" id="L503" title="1 of 4 branches missed.">            if (second instanceof Cup &amp;&amp; first.getNumber() &lt; second.getNumber()) {</span>
+<span class="pc bpc" id="L504" title="1 of 2 branches missed.">                String firstType = first instanceof Cup ? &quot;cup&quot; : &quot;lid&quot;;</span>
+<span class="fc" id="L505">                String[][] result = {</span>
+<span class="fc" id="L506">                    {firstType, String.valueOf(first.getNumber())},</span>
+<span class="fc" id="L507">                    {&quot;cup&quot;, String.valueOf(second.getNumber())}</span>
+                };
+<span class="fc" id="L509">                lastOperation = true;</span>
+<span class="fc" id="L510">                return result;</span>
+            }
+        }
+<span class="fc" id="L513">        lastOperation = false;</span>
+<span class="fc" id="L514">        return null;</span>
+    }
+    
+    /**
+     * Registrar el indice en la torre de una cup.
+     * @param number a registrar
+     * @param index indice en la torre
+     */
+    public void registerCup(int number, int index){
+<span class="fc" id="L523">        cupIndex.put(number, index);</span>
+<span class="fc" id="L524">        indexLastCups.add(index);</span>
+<span class="fc" id="L525">    }</span>
+    
+    /**
+     * Registrar el indice en la torre de una lid.
+     * @param number a registrar
+     * @param index indice en la torre
+     */
+    public void registerLid(int number, int index){
+<span class="fc" id="L533">        lidIndex.put(number, index);</span>
+<span class="fc" id="L534">        indexLastLids.add(index);</span>
+<span class="fc" id="L535">    }</span>
+    
+    /**
+     * Obtener estado de la ultima operacion.
+     * @return valor booleano de la ultima operacion
+     */
+    public boolean ok(){
+<span class="fc" id="L542">        return lastOperation;</span>
+    }
+    
+    /**
+     * Salir del simulador.
+     */
+    public void exit(){
+<span class="fc" id="L549">        makeInvisible();</span>
+<span class="fc" id="L550">        clearTower();</span>
+<span class="fc" id="L551">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

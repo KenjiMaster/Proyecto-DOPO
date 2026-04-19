@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Cup.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">StakingItems</a> &gt; <a href="index.source.html" class="el_package">domain.tower</a> &gt; <span class="el_source">Cup.java</span></div><h1>Cup.java</h1><pre class="source lang-java linenums">package domain.tower;
+import java.util.List;
+import java.awt.*;
+import domain.shapes.Rectangle;
+/**
+ * Clase de representacion de taza.
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
+public class Cup extends Item{
+    private Lid lid;
+    
+    protected Rectangle cup;
+    protected Rectangle empty; 
+    
+    /**
+     * Constructor de cup.
+     * @param  i numero 
+     * @param  tower torre
+     */
+<span class="fc" id="L21">    public Cup(int i, Tower tower){</span>
+<span class="fc" id="L22">        this.setNumber(i);</span>
+<span class="fc" id="L23">        this.setHeight(2*i - 1);</span>
+<span class="fc" id="L24">        this.makeInvisible();</span>
+<span class="fc" id="L25">        isCovered = false;</span>
+<span class="fc" id="L26">        createShape(tower.height(),Tower.width,Tower.maxHeight);</span>
+<span class="fc" id="L27">    }</span>
+    
+    /**
+     * Creador forma de taza.
+     * @param  height altura de la torre 
+     * @param  width ancho de la torre
+     * @param  maxHeight altura maxima de la torre
+     */
+    @Override
+    public void createShape(int height,int width,int maxHeight){
+<span class="fc" id="L37">        cup = new Rectangle();</span>
+<span class="fc" id="L38">        cup.changeColor(this.makeColor(this.getNumber()));</span>
+<span class="fc" id="L39">        cup.changeSize(this.getHeight()*10,this.getHeight()*10);</span>
+<span class="fc" id="L40">        empty = new Rectangle();</span>
+<span class="fc" id="L41">        empty.changeColor(Color.white);</span>
+<span class="fc" id="L42">        empty.changeSize((this.getHeight()*10)-10,(this.getHeight()*10)-20);</span>
+<span class="fc" id="L43">        int floor = maxHeight - height*10;</span>
+<span class="fc" id="L44">        int vertical = width/2;</span>
+<span class="fc" id="L45">        int xPosition = vertical-(this.getHeight()*5);</span>
+<span class="fc" id="L46">        int yPosition = floor - this.getHeight()*10;</span>
+<span class="fc" id="L47">        cup.setPosition(xPosition,yPosition);</span>
+<span class="fc" id="L48">        empty.setPosition(xPosition+10,yPosition);</span>
+<span class="fc" id="L49">    }</span>
+    
+    
+    /**
+     * Hacer visible la figura de taza.
+     */
+    @Override
+    public void makeVisible(){
+<span class="fc" id="L57">        cup.makeVisible();</span>
+<span class="fc" id="L58">        empty.makeVisible();</span>
+<span class="fc" id="L59">    }</span>
+    
+    /**
+     * Hacer invisible la figura de taza.
+     */
+    @Override
+    public void makeInvisible(){
+<span class="fc" id="L66">        isVisible = false;</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        if(cup != null){</span>
+<span class="fc" id="L68">            cup.makeInvisible();</span>
+<span class="fc" id="L69">            empty.makeInvisible();</span>
+        }
+<span class="fc" id="L71">    }</span>
+    
+    /**
+     * Removedor de Cup.
+     */
+    @Override
+    public void remove(){
+<span class="fc" id="L78">        this.makeInvisible();</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">        if(isCovered){</span>
+<span class="nc" id="L80">            lid.remove();</span>
+<span class="nc" id="L81">            lid = null;</span>
+        }
+<span class="fc" id="L83">    }</span>
+    
+    /**
+     * Tapar la cup.
+     * @param  lid tapa de la cup
+     */
+    @Override
+    public void makeCovered(Lid lid){
+<span class="fc" id="L91">        this.lid = lid;</span>
+<span class="fc" id="L92">        this.lid.makeCovered(lid);</span>
+<span class="fc" id="L93">        empty.changeColor(Color.LIGHT_GRAY);</span>
+<span class="fc" id="L94">        isCovered = true;</span>
+<span class="fc" id="L95">    }</span>
+    
+    /**
+     * Destapar la cup.
+     */
+    @Override
+    public void makeIncovered(){
+<span class="fc" id="L102">        this.lid.makeIncovered();</span>
+<span class="fc" id="L103">        this.lid = null;</span>
+<span class="fc" id="L104">        empty.changeColor(Color.WHITE);</span>
+<span class="fc" id="L105">        isCovered = false;</span>
+<span class="fc" id="L106">    }</span>
+    
+    /**
+     * Mirar si la Cup esta tapada.
+     * @return valor booleano de covertura
+     */
+    @Override
+    public boolean isCovered(){
+<span class="fc" id="L114">        return this.isCovered;</span>
+    }
+    
+    /**
+     * Cubrir el item inmediatamente anterior.
+     * @param below item debajo del actual
+     */
+    @Override
+    public void onStackedAbove(Item below){
+<span class="fc bfc" id="L123" title="All 2 branches covered.">        if(isCovered){</span>
+<span class="fc" id="L124">            this.makeIncovered();</span>
+        }
+<span class="fc" id="L126">    }</span>
+    
+    /**
+     * Hacer movimiento especial de la taza.
+     * @param items copia de la lista de items de la torre.
+     */
+    @Override
+    public void specialMove(List&lt;Item&gt; items){
+        
+<span class="fc" id="L135">    }</span>
+    
+    /**
+     * Obtener tipo de item.
+     * @return tipo de item
+     */
+    @Override
+    public String getType(){
+<span class="fc" id="L143">        return &quot;cup&quot;;</span>
+    }
+    
+    /**
+     * Registrar el indice en la torre.
+     * @param torre a registrar
+     * @param index indice en la torre
+     */
+    @Override
+    public void register(Tower tower, int index){
+<span class="fc" id="L153">        tower.registerCup(this.getNumber(), index);</span>
+<span class="fc" id="L154">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

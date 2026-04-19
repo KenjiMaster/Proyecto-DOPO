@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Lid.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">StakingItems</a> &gt; <a href="index.source.html" class="el_package">domain.tower</a> &gt; <span class="el_source">Lid.java</span></div><h1>Lid.java</h1><pre class="source lang-java linenums">package domain.tower;
+import java.util.*;
+import domain.shapes.Rectangle;
+/**
+ * Clase de representacion de tapa.
+ * 
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
+public class Lid extends Item{
+    
+    private Cup cup;
+    protected int width;
+    protected Rectangle lid;
+    
+    /**
+     * Constructor de Lid.
+     * @param  i numero 
+     * @param  tower torre
+     */
+<span class="fc" id="L21">    public Lid(int i, Tower tower){</span>
+<span class="fc" id="L22">        this.makeInvisible();</span>
+<span class="fc" id="L23">        this.setHeight(1);</span>
+<span class="fc" id="L24">        this.width = 2*i - 1;</span>
+<span class="fc" id="L25">        this.setNumber(i);</span>
+<span class="fc" id="L26">        this.cup = null;</span>
+<span class="fc" id="L27">        this.isCovered = false;</span>
+<span class="fc" id="L28">        createShape(tower.height(),Tower.width,Tower.maxHeight);</span>
+<span class="fc" id="L29">    }</span>
+    
+    /**
+     * Creador forma de tapa.
+     * @param  height altura de la torre 
+     * @param  width ancho de la torre
+     * @param  maxHeight altura maxima de la torre
+     */
+    @Override
+    public void createShape(int height,int width,int maxHeight){
+<span class="fc" id="L39">        lid = new Rectangle();</span>
+<span class="fc" id="L40">        lid.changeColor(this.makeColor(this.getNumber()));</span>
+<span class="fc" id="L41">        lid.changeSize(this.getHeight()*10,this.width*10);</span>
+<span class="fc" id="L42">        int floor = maxHeight - (height*10);</span>
+<span class="fc" id="L43">        int vertical = width/2;</span>
+<span class="fc" id="L44">        int xPosition = vertical-(this.width*5);</span>
+<span class="fc" id="L45">        int yPosition = floor - (this.getHeight()*10);</span>
+<span class="fc" id="L46">        lid.setPosition(xPosition,yPosition);</span>
+<span class="fc" id="L47">    }</span>
+    
+    /**
+     * Obtener el ancho de la tapa.
+     * @return numero del ancho
+     */
+    public int getWidth(){
+<span class="fc" id="L54">        return width;</span>
+    }
+    
+    /**
+     * Hacer visible la figura de tapa.
+     */
+    @Override
+    public void makeVisible(){
+<span class="fc" id="L62">        lid.makeVisible();</span>
+<span class="fc" id="L63">    }</span>
+    
+    /**
+     * Hacer invisible la figura de tapa.
+     */
+    @Override
+    public void makeInvisible(){
+<span class="fc" id="L70">        isVisible = false;</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">        if(lid != null){</span>
+<span class="fc" id="L72">            lid.makeInvisible();</span>
+        }
+<span class="fc" id="L74">    }</span>
+    
+    /**
+     * Removedor de Lid.
+     */
+    @Override
+    public void remove(){
+<span class="fc" id="L81">        this.makeInvisible();</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">        if(!(this.cup == null)){</span>
+<span class="nc" id="L83">            this.cup.makeIncovered();</span>
+<span class="nc" id="L84">            this.cup = null;</span>
+        }
+<span class="fc" id="L86">    }</span>
+    
+    /**
+     * Obtener si esta cubierta
+     * @return si esta cubierta
+     */
+    @Override
+    public boolean isCovered(){
+<span class="fc" id="L94">        return isCovered;</span>
+    }
+    
+    /**
+     * Tapar la cup.
+     * @param  lid tapa de la cup
+     */
+    @Override
+    public void makeCovered(Lid lid){
+<span class="fc" id="L103">        isCovered = true;</span>
+<span class="fc" id="L104">    }</span>
+    
+    /**
+     * Destapar la cup.
+     */
+    @Override
+    public void makeIncovered(){
+<span class="fc" id="L111">        isCovered = false;</span>
+<span class="fc" id="L112">    }</span>
+    
+    /**
+     * Cubrir el item inmediatamente anterior.
+     * @param below item debajo del actual
+     */
+    @Override
+    public void onStackedAbove(Item below){
+<span class="fc bfc" id="L120" title="All 4 branches covered.">        if (below instanceof Cup &amp;&amp; below.getNumber() == this.getNumber()){</span>
+<span class="fc" id="L121">            ((Cup) below).makeCovered(this);</span>
+        }
+<span class="fc" id="L123">    }</span>
+    
+    /**
+     * Obtener tipo de item.
+     * @return tipo de item
+     */
+    @Override
+    public String getType(){
+<span class="fc" id="L131">        return &quot;lid&quot;;</span>
+    }
+    
+    /**
+     * Obtener si la tapa de deja eliminar.
+     * @return verdadero para eliminar, falso para no eliminar.
+     */
+    public boolean okRemove(){
+<span class="fc" id="L139">        return true;</span>
+    }
+    
+    /**
+     * Hacer movimiento especial de la tapa.
+     * @param items copia de la lista de items de la torre.
+     */
+    @Override
+    public void specialMove(List&lt;Item&gt; items){
+        
+<span class="fc" id="L149">    }</span>
+    
+    /**
+     * Registrar el indice en la torre.
+     * @param torre a registrar
+     * @param index indice en la torre
+     */
+    @Override
+    public void register(Tower tower, int index){
+<span class="fc" id="L158">        tower.registerLid(this.getNumber(), index);</span>
+<span class="fc" id="L159">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

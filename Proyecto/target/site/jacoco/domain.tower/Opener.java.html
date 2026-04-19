@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Opener.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">StakingItems</a> &gt; <a href="index.source.html" class="el_package">domain.tower</a> &gt; <span class="el_source">Opener.java</span></div><h1>Opener.java</h1><pre class="source lang-java linenums">package domain.tower;
+
+import java.util.List;
+import java.util.ArrayList;
+import java.awt.*;
+import domain.shapes.Rectangle;
+import domain.shapes.Circle;
+/**
+ * Write a description of class Opener here.
+ * 
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
+public class Opener extends Cup{
+    private Tower tower;
+    private Circle r1;
+    private Circle r2;
+    
+    /**
+     * Constructor de Opener.
+     * @param  i numero 
+     * @param  tower torre
+     */
+    public Opener(int i, Tower tower){
+<span class="fc" id="L25">        super(i,tower);</span>
+<span class="fc" id="L26">        this.tower = tower;</span>
+<span class="fc" id="L27">    }</span>
+    
+    /**
+     * Creador forma de taza.
+     * @param  height altura de la torre 
+     * @param  width ancho de la torre
+     * @param  maxHeight altura maxima de la torre
+     */
+    @Override
+    public void createShape(int height,int width,int maxHeight){
+<span class="fc" id="L37">        cup = new Rectangle();</span>
+<span class="fc" id="L38">        cup.changeColor(this.makeColor(this.getNumber()));</span>
+<span class="fc" id="L39">        cup.changeSize(this.getHeight()*10,this.getHeight()*10);</span>
+<span class="fc" id="L40">        empty = new Rectangle();</span>
+<span class="fc" id="L41">        empty.changeColor(Color.yellow);</span>
+<span class="fc" id="L42">        r1 = new Circle();</span>
+<span class="fc" id="L43">        r1.changeColor(Color.white);</span>
+<span class="fc" id="L44">        r1.changeSize(10);</span>
+<span class="fc" id="L45">        r2 = new Circle();</span>
+<span class="fc" id="L46">        r2.changeSize(10);</span>
+<span class="fc" id="L47">        r2.changeColor(Color.white);</span>
+<span class="fc" id="L48">        empty.changeSize((this.getHeight()*10)-10,(this.getHeight()*10)-20);</span>
+<span class="fc" id="L49">        int floor = maxHeight - height*10;</span>
+<span class="fc" id="L50">        int vertical = width/2;</span>
+<span class="fc" id="L51">        int xPosition = vertical-(this.getHeight()*5);</span>
+<span class="fc" id="L52">        int yPosition = floor - this.getHeight()*10;</span>
+<span class="fc" id="L53">        cup.setPosition(xPosition,yPosition);</span>
+<span class="fc" id="L54">        empty.setPosition(xPosition+10,yPosition);</span>
+<span class="fc" id="L55">        r1.setPosition(xPosition,yPosition);</span>
+<span class="fc" id="L56">        r2.setPosition(xPosition+(this.getHeight()*10)-10,yPosition);</span>
+<span class="fc" id="L57">    }</span>
+    
+    /**
+     * Obtener tipo de item.
+     * @return tipo de item
+     */
+    @Override
+    public String getType(){
+<span class="fc" id="L65">        return &quot;opener&quot;;</span>
+    }
+    
+    /**
+     * Hacer visible la figura de taza.
+     */
+    @Override
+    public void makeVisible(){
+<span class="fc" id="L73">        cup.makeVisible();</span>
+<span class="fc" id="L74">        empty.makeVisible();</span>
+<span class="fc" id="L75">        r1.makeVisible();</span>
+<span class="fc" id="L76">        r2.makeVisible();</span>
+<span class="fc" id="L77">    }</span>
+    
+    /**
+     * Hacer invisible la figura de taza.
+     */
+    @Override
+    public void makeInvisible(){
+<span class="fc" id="L84">        isVisible = false;</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        if(cup != null){</span>
+<span class="fc" id="L86">            cup.makeInvisible();</span>
+<span class="fc" id="L87">            empty.makeInvisible();</span>
+<span class="fc" id="L88">            r1.makeInvisible();</span>
+<span class="fc" id="L89">            r2.makeInvisible();</span>
+        }
+<span class="fc" id="L91">    }</span>
+    
+    /**
+     * Hacer movimiento especial de la taza (Eliminar las tapas que estan debajo).
+     * @param items copia de la lista de items de la torre.
+     */
+    @Override
+    public void specialMove(List&lt;Item&gt; items){
+<span class="fc bfc" id="L99" title="All 4 branches covered.">        while(!items.isEmpty() &amp;&amp; &quot;lid&quot;.equals(items.get(items.size()-1).getType())){</span>
+<span class="fc" id="L100">            tower.removeLid(items.get(items.size()-1).getNumber());</span>
+<span class="fc" id="L101">            items.remove(items.size()-1);</span>
+        }
+<span class="fc" id="L103">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

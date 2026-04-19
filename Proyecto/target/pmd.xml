@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd xmlns="http://pmd.sourceforge.net/report/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pmd.sourceforge.net/report/2.0.0 http://pmd.sourceforge.net/report_2_0_0.xsd" version="7.0.0" timestamp="2026-04-18T21:54:41.771">
+<file name="C:\Users\Daniel\Documents\SEMESTRE-CINCO\DOPO\Proyecto\src\main\java\domain\shapes\Canvas.java">
+<violation beginline="31" endline="34" begincolumn="9" endcolumn="10" rule="NonThreadSafeSingleton" ruleset="Multithreading" package="domain.shapes" class="Canvas" method="getCanvas" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_multithreading.html#nonthreadsafesingleton" priority="3">
+Singleton is not thread safe
+</violation>
+<violation beginline="47" endline="47" begincolumn="13" endcolumn="46" rule="LooseCoupling" ruleset="Best Practices" package="domain.shapes" class="Canvas" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_bestpractices.html#loosecoupling" priority="3">
+Avoid using implementation types like 'HashMap'; use the interface instead
+</violation>
+<violation beginline="133" endline="133" begincolumn="12" endcolumn="37" rule="LiteralsFirstInComparisons" ruleset="Best Practices" package="domain.shapes" class="Canvas" method="setForegroundColor" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_bestpractices.html#literalsfirstincomparisons" priority="3">
+Position literals first in String comparisons
+</violation>
+<violation beginline="134" endline="134" begincolumn="13" endcolumn="41" rule="ControlStatementBraces" ruleset="Code Style" package="domain.shapes" class="Canvas" method="setForegroundColor" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_codestyle.html#controlstatementbraces" priority="3">
+This statement should have braces
+</violation>
+<violation beginline="135" endline="135" begincolumn="17" endcolumn="44" rule="LiteralsFirstInComparisons" ruleset="Best Practices" package="domain.shapes" class="Canvas" method="setForegroundColor" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_bestpractices.html#literalsfirstincomparisons" priority="3">
+Position literals first in String comparisons
+</violation>
+<violation beginline="136" endline="136" begincolumn="13" endcolumn="43" rule="ControlStatementBraces" ruleset="Code Style" package="domain.shapes" class="Canvas" method="setForegroundColor" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_codestyle.html#controlstatementbraces" priority="3">
+This statement should have braces
+</violation>
+<violation beginline="137" endline="137" begincolumn="17" endcolumn="43" rule="LiteralsFirstInComparisons" ruleset="Best Practices" package="domain.shapes" class="Canvas" method="setForegroundColor" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_bestpractices.html#literalsfirstincomparisons" priority="3">
+Position literals first in String comparisons
+</violation>
+<violation beginline="138" endline="138" begincolumn="13" endcolumn="42" rule="ControlStatementBraces" ruleset="Code Style" package="domain.shapes" class="Canvas" method="setForegroundColor" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_codestyle.html#controlstatementbraces" priority="3">
+This statement should have braces
+</violation>
+<violation beginline="139" endline="139" begincolumn="17" endcolumn="45" rule="LiteralsFirstInComparisons" ruleset="Best Practices" package="domain.shapes" class="Canvas" method="setForegroundColor" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_bestpractices.html#literalsfirstincomparisons" priority="3">
+Position literals first in String comparisons
+</violation>
+<violation beginline="140" endline="140" begincolumn="13" endcolumn="44" rule="ControlStatementBraces" ruleset="Code Style" package="domain.shapes" class="Canvas" method="setForegroundColor" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_codestyle.html#controlstatementbraces" priority="3">
+This statement should have braces
+</violation>
+<violation beginline="141" endline="141" begincolumn="17" endcolumn="44" rule="LiteralsFirstInComparisons" ruleset="Best Practices" package="domain.shapes" class="Canvas" method="setForegroundColor" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_bestpractices.html#literalsfirstincomparisons" priority="3">
+Position literals first in String comparisons
+</violation>
+<violation beginline="142" endline="142" begincolumn="13" endcolumn="43" rule="ControlStatementBraces" ruleset="Code Style" package="domain.shapes" class="Canvas" method="setForegroundColor" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_codestyle.html#controlstatementbraces" priority="3">
+This statement should have braces
+</violation>
+<violation beginline="143" endline="143" begincolumn="17" endcolumn="46" rule="LiteralsFirstInComparisons" ruleset="Best Practices" package="domain.shapes" class="Canvas" method="setForegroundColor" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_bestpractices.html#literalsfirstincomparisons" priority="3">
+Position literals first in String comparisons
+</violation>
+<violation beginline="144" endline="144" begincolumn="13" endcolumn="45" rule="ControlStatementBraces" ruleset="Code Style" package="domain.shapes" class="Canvas" method="setForegroundColor" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_codestyle.html#controlstatementbraces" priority="3">
+This statement should have braces
+</violation>
+<violation beginline="145" endline="145" begincolumn="17" endcolumn="44" rule="LiteralsFirstInComparisons" ruleset="Best Practices" package="domain.shapes" class="Canvas" method="setForegroundColor" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_bestpractices.html#literalsfirstincomparisons" priority="3">
+Position literals first in String comparisons
+</violation>
+<violation beginline="146" endline="146" begincolumn="13" endcolumn="43" rule="ControlStatementBraces" ruleset="Code Style" package="domain.shapes" class="Canvas" method="setForegroundColor" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_codestyle.html#controlstatementbraces" priority="3">
+This statement should have braces
+</violation>
+<violation beginline="148" endline="148" begincolumn="13" endcolumn="43" rule="ControlStatementBraces" ruleset="Code Style" package="domain.shapes" class="Canvas" method="setForegroundColor" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_codestyle.html#controlstatementbraces" priority="3">
+This statement should have braces
+</violation>
+<violation beginline="160" endline="162" begincolumn="11" endcolumn="10" rule="EmptyCatchBlock" ruleset="Error Prone" package="domain.shapes" class="Canvas" method="wait" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_errorprone.html#emptycatchblock" priority="3">
+Avoid empty catch blocks
+</violation>
+<violation beginline="170" endline="172" begincolumn="9" endcolumn="10" rule="ForLoopCanBeForeach" ruleset="Best Practices" package="domain.shapes" class="Canvas" method="redraw" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_bestpractices.html#forloopcanbeforeach" priority="3">
+This for loop can be replaced by a foreach loop
+</violation>
+<violation beginline="194" endline="194" begincolumn="21" endcolumn="26" rule="MissingOverride" ruleset="Best Practices" package="domain.shapes" class="CanvasPane" method="paint" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_bestpractices.html#missingoverride" priority="3">
+The method 'paint(Graphics)' is missing an @Override annotation.
+</violation>
+</file>
+<file name="C:\Users\Daniel\Documents\SEMESTRE-CINCO\DOPO\Proyecto\src\main\java\domain\shapes\Circle.java">
+<violation beginline="2" endline="2" begincolumn="1" endcolumn="19" rule="UnnecessaryImport" ruleset="Code Style" package="domain.shapes" class="Circle" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_codestyle.html#unnecessaryimport" priority="4">
+Unused import 'java.awt.*'
+</violation>
+</file>
+<file name="C:\Users\Daniel\Documents\SEMESTRE-CINCO\DOPO\Proyecto\src\main\java\domain\shapes\Rectangle.java">
+<violation beginline="3" endline="3" begincolumn="1" endcolumn="19" rule="UnnecessaryImport" ruleset="Code Style" package="domain.shapes" class="Rectangle" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_codestyle.html#unnecessaryimport" priority="4">
+Unused import 'java.awt.*'
+</violation>
+</file>
+<file name="C:\Users\Daniel\Documents\SEMESTRE-CINCO\DOPO\Proyecto\src\main\java\domain\tower\Cup.java">
+<violation beginline="133" endline="135" begincolumn="46" endcolumn="6" rule="UncommentedEmptyMethodBody" ruleset="Documentation" package="domain.tower" class="Cup" method="specialMove" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_documentation.html#uncommentedemptymethodbody" priority="3">
+Document empty method body
+</violation>
+</file>
+<file name="C:\Users\Daniel\Documents\SEMESTRE-CINCO\DOPO\Proyecto\src\main\java\domain\tower\Fearful.java">
+<violation beginline="95" endline="97" begincolumn="9" endcolumn="10" rule="SimplifyBooleanReturns" ruleset="Design" package="domain.tower" class="Fearful" method="okRemove" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_design.html#simplifybooleanreturns" priority="3">
+This if statement can be replaced by `return !{condition};`
+</violation>
+</file>
+<file name="C:\Users\Daniel\Documents\SEMESTRE-CINCO\DOPO\Proyecto\src\main\java\domain\tower\Item.java">
+<violation beginline="16" endline="16" begincolumn="19" endcolumn="24" rule="SingularField" ruleset="Design" package="domain.tower" class="Item" variable="color" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_design.html#singularfield" priority="3">
+Perhaps 'color' could be replaced by a local variable.
+</violation>
+<violation beginline="24" endline="24" begincolumn="21" endcolumn="39" rule="UselessParentheses" ruleset="Code Style" package="domain.tower" class="Item" method="makeColor" variable="hue" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="C:\Users\Daniel\Documents\SEMESTRE-CINCO\DOPO\Proyecto\src\main\java\domain\tower\Lid.java">
+<violation beginline="82" endline="82" begincolumn="13" endcolumn="31" rule="LogicInversion" ruleset="Design" package="domain.tower" class="Lid" method="remove" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_design.html#logicinversion" priority="3">
+Use opposite operator instead of the logic complement operator.
+</violation>
+<violation beginline="147" endline="149" begincolumn="46" endcolumn="6" rule="UncommentedEmptyMethodBody" ruleset="Documentation" package="domain.tower" class="Lid" method="specialMove" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_documentation.html#uncommentedemptymethodbody" priority="3">
+Document empty method body
+</violation>
+</file>
+<file name="C:\Users\Daniel\Documents\SEMESTRE-CINCO\DOPO\Proyecto\src\main\java\domain\tower\Opener.java">
+<violation beginline="4" endline="4" begincolumn="1" endcolumn="28" rule="UnnecessaryImport" ruleset="Code Style" package="domain.tower" class="Opener" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_codestyle.html#unnecessaryimport" priority="4">
+Unused import 'java.util.ArrayList'
+</violation>
+</file>
+<file name="C:\Users\Daniel\Documents\SEMESTRE-CINCO\DOPO\Proyecto\src\main\java\domain\tower\Tower.java">
+<violation beginline="37" endline="37" begincolumn="9" endcolumn="19" rule="AssignmentToNonFinalStatic" ruleset="Error Prone" package="domain.tower" class="Tower" method="Tower" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_errorprone.html#assignmenttononfinalstatic" priority="3">
+Possible unsafe assignment to non-final static field 'width' in a constructor.
+</violation>
+<violation beginline="38" endline="38" begincolumn="9" endcolumn="23" rule="AssignmentToNonFinalStatic" ruleset="Error Prone" package="domain.tower" class="Tower" method="Tower" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_errorprone.html#assignmenttononfinalstatic" priority="3">
+Possible unsafe assignment to non-final static field 'maxHeight' in a constructor.
+</violation>
+<violation beginline="80" endline="80" begincolumn="37" endcolumn="44" rule="UselessParentheses" ruleset="Code Style" package="domain.tower" class="Tower" method="pushCup" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="88" endline="88" begincolumn="27" endcolumn="90" rule="ControlStatementBraces" ruleset="Code Style" package="domain.tower" class="Tower" method="pushCup" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_codestyle.html#controlstatementbraces" priority="3">
+This statement should have braces
+</violation>
+<violation beginline="94" endline="94" begincolumn="12" endcolumn="33" rule="LiteralsFirstInComparisons" ruleset="Best Practices" package="domain.tower" class="Tower" method="getTypeCup" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_bestpractices.html#literalsfirstincomparisons" priority="3">
+Position literals first in String comparisons
+</violation>
+<violation beginline="96" endline="96" begincolumn="18" endcolumn="45" rule="LiteralsFirstInComparisons" ruleset="Best Practices" package="domain.tower" class="Tower" method="getTypeCup" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_bestpractices.html#literalsfirstincomparisons" priority="3">
+Position literals first in String comparisons
+</violation>
+<violation beginline="124" endline="124" begincolumn="27" endcolumn="89" rule="ControlStatementBraces" ruleset="Code Style" package="domain.tower" class="Tower" method="popCup" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_codestyle.html#controlstatementbraces" priority="3">
+This statement should have braces
+</violation>
+<violation beginline="148" endline="148" begincolumn="31" endcolumn="97" rule="ControlStatementBraces" ruleset="Code Style" package="domain.tower" class="Tower" method="removeCup" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_codestyle.html#controlstatementbraces" priority="3">
+This statement should have braces
+</violation>
+<violation beginline="170" endline="170" begincolumn="27" endcolumn="90" rule="ControlStatementBraces" ruleset="Code Style" package="domain.tower" class="Tower" method="pushLid" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_codestyle.html#controlstatementbraces" priority="3">
+This statement should have braces
+</violation>
+<violation beginline="176" endline="176" begincolumn="12" endcolumn="34" rule="LiteralsFirstInComparisons" ruleset="Best Practices" package="domain.tower" class="Tower" method="getTypeLid" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_bestpractices.html#literalsfirstincomparisons" priority="3">
+Position literals first in String comparisons
+</violation>
+<violation beginline="178" endline="178" begincolumn="18" endcolumn="38" rule="LiteralsFirstInComparisons" ruleset="Best Practices" package="domain.tower" class="Tower" method="getTypeLid" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_bestpractices.html#literalsfirstincomparisons" priority="3">
+Position literals first in String comparisons
+</violation>
+<violation beginline="180" endline="180" begincolumn="18" endcolumn="40" rule="LiteralsFirstInComparisons" ruleset="Best Practices" package="domain.tower" class="Tower" method="getTypeLid" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_bestpractices.html#literalsfirstincomparisons" priority="3">
+Position literals first in String comparisons
+</violation>
+<violation beginline="204" endline="204" begincolumn="27" endcolumn="89" rule="ControlStatementBraces" ruleset="Code Style" package="domain.tower" class="Tower" method="popLid" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_codestyle.html#controlstatementbraces" priority="3">
+This statement should have braces
+</violation>
+<violation beginline="224" endline="224" begincolumn="27" endcolumn="93" rule="ControlStatementBraces" ruleset="Code Style" package="domain.tower" class="Tower" method="removeLid" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_codestyle.html#controlstatementbraces" priority="3">
+This statement should have braces
+</violation>
+<violation beginline="282" endline="282" begincolumn="13" endcolumn="38" rule="LiteralsFirstInComparisons" ruleset="Best Practices" package="domain.tower" class="Tower" method="orderTower" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_bestpractices.html#literalsfirstincomparisons" priority="3">
+Position literals first in String comparisons
+</violation>
+<violation beginline="282" endline="282" begincolumn="42" endcolumn="70" rule="LiteralsFirstInComparisons" ruleset="Best Practices" package="domain.tower" class="Tower" method="orderTower" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_bestpractices.html#literalsfirstincomparisons" priority="3">
+Position literals first in String comparisons
+</violation>
+<violation beginline="282" endline="282" begincolumn="74" endcolumn="108" rule="LiteralsFirstInComparisons" ruleset="Best Practices" package="domain.tower" class="Tower" method="orderTower" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_bestpractices.html#literalsfirstincomparisons" priority="3">
+Position literals first in String comparisons
+</violation>
+<violation beginline="282" endline="282" begincolumn="110" endcolumn="120" rule="ControlStatementBraces" ruleset="Code Style" package="domain.tower" class="Tower" method="orderTower" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_codestyle.html#controlstatementbraces" priority="3">
+This statement should have braces
+</violation>
+<violation beginline="425" endline="425" begincolumn="12" endcolumn="30" rule="LiteralsFirstInComparisons" ruleset="Best Practices" package="domain.tower" class="Tower" method="findIndexItem" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_bestpractices.html#literalsfirstincomparisons" priority="3">
+Position literals first in String comparisons
+</violation>
+<violation beginline="425" endline="425" begincolumn="34" endcolumn="55" rule="LiteralsFirstInComparisons" ruleset="Best Practices" package="domain.tower" class="Tower" method="findIndexItem" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_bestpractices.html#literalsfirstincomparisons" priority="3">
+Position literals first in String comparisons
+</violation>
+<violation beginline="425" endline="425" begincolumn="59" endcolumn="86" rule="LiteralsFirstInComparisons" ruleset="Best Practices" package="domain.tower" class="Tower" method="findIndexItem" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_bestpractices.html#literalsfirstincomparisons" priority="3">
+Position literals first in String comparisons
+</violation>
+</file>
+<file name="C:\Users\Daniel\Documents\SEMESTRE-CINCO\DOPO\Proyecto\src\main\java\domain\tower\TowerContest.java">
+<violation beginline="10" endline="10" begincolumn="8" endcolumn="13" rule="UseUtilityClass" ruleset="Design" package="domain.tower" class="TowerContest" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_design.html#useutilityclass" priority="3">
+This utility class has a non-private constructor
+</violation>
+<violation beginline="153" endline="153" begincolumn="28" endcolumn="43" rule="ControlStatementBraces" ruleset="Code Style" package="domain.tower" class="TowerContest" method="solve" externalInfoUrl="https://docs.pmd-code.org/pmd-doc-7.0.0/pmd_rules_java_codestyle.html#controlstatementbraces" priority="3">
+This statement should have braces
+</violation>
+</file>
+</pmd>

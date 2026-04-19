@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd-cpd>
+   <file path="C:\Users\Daniel\Documents\SEMESTRE-CINCO\DOPO\Proyecto\src\main\java\domain\shapes\Canvas.java"
+         totalNumberOfTokens="768"/>
+   <file path="C:\Users\Daniel\Documents\SEMESTRE-CINCO\DOPO\Proyecto\src\main\java\domain\shapes\Circle.java"
+         totalNumberOfTokens="105"/>
+   <file path="C:\Users\Daniel\Documents\SEMESTRE-CINCO\DOPO\Proyecto\src\main\java\domain\shapes\Figure.java"
+         totalNumberOfTokens="329"/>
+   <file path="C:\Users\Daniel\Documents\SEMESTRE-CINCO\DOPO\Proyecto\src\main\java\domain\shapes\Rectangle.java"
+         totalNumberOfTokens="118"/>
+   <file path="C:\Users\Daniel\Documents\SEMESTRE-CINCO\DOPO\Proyecto\src\main\java\domain\shapes\Triangle.java"
+         totalNumberOfTokens="152"/>
+   <file path="C:\Users\Daniel\Documents\SEMESTRE-CINCO\DOPO\Proyecto\src\main\java\domain\tower\Crazy.java"
+         totalNumberOfTokens="366"/>
+   <file path="C:\Users\Daniel\Documents\SEMESTRE-CINCO\DOPO\Proyecto\src\main\java\domain\tower\Cup.java"
+         totalNumberOfTokens="455"/>
+   <file path="C:\Users\Daniel\Documents\SEMESTRE-CINCO\DOPO\Proyecto\src\main\java\domain\tower\Fearful.java"
+         totalNumberOfTokens="366"/>
+   <file path="C:\Users\Daniel\Documents\SEMESTRE-CINCO\DOPO\Proyecto\src\main\java\domain\tower\Hierarchical.java"
+         totalNumberOfTokens="457"/>
+   <file path="C:\Users\Daniel\Documents\SEMESTRE-CINCO\DOPO\Proyecto\src\main\java\domain\tower\Item.java"
+         totalNumberOfTokens="190"/>
+   <file path="C:\Users\Daniel\Documents\SEMESTRE-CINCO\DOPO\Proyecto\src\main\java\domain\tower\Lid.java"
+         totalNumberOfTokens="411"/>
+   <file path="C:\Users\Daniel\Documents\SEMESTRE-CINCO\DOPO\Proyecto\src\main\java\domain\tower\Opener.java"
+         totalNumberOfTokens="424"/>
+   <file path="C:\Users\Daniel\Documents\SEMESTRE-CINCO\DOPO\Proyecto\src\main\java\domain\tower\Rainbow.java"
+         totalNumberOfTokens="320"/>
+   <file path="C:\Users\Daniel\Documents\SEMESTRE-CINCO\DOPO\Proyecto\src\main\java\domain\tower\Tower.java"
+         totalNumberOfTokens="2660"/>
+   <file path="C:\Users\Daniel\Documents\SEMESTRE-CINCO\DOPO\Proyecto\src\main\java\domain\tower\TowerContest.java"
+         totalNumberOfTokens="759"/>
+   <duplication lines="20" tokens="100">
+      <file begintoken="1494"
+            column="17"
+            endcolumn="17"
+            endline="43"
+            endtoken="1593"
+            line="24"
+            path="C:\Users\Daniel\Documents\SEMESTRE-CINCO\DOPO\Proyecto\src\main\java\domain\tower\Crazy.java"/>
+      <file begintoken="4170"
+            column="19"
+            endcolumn="17"
+            endline="46"
+            endtoken="4269"
+            line="27"
+            path="C:\Users\Daniel\Documents\SEMESTRE-CINCO\DOPO\Proyecto\src\main\java\domain\tower\Rainbow.java"/>
+      <codefragment><![CDATA[    public Crazy(int i, Tower tower){
+        super(i,tower);
+        this.tower = tower;
+    }
+    
+    /**
+     * Creador forma de tapa.
+     * @param  height altura de la torre 
+     * @param  width ancho de la torre
+     * @param  maxHeight altura maxima de la torre
+     */
+    @Override
+    public void createShape(int height,int width,int maxHeight){
+        lid = new Rectangle();
+        lid.changeColor(this.makeColor(this.getNumber()));
+        lid.changeSize(this.getHeight()*10,this.width*10);
+        r1 = new Triangle();
+        r1.changeColor(Color.white);
+        r1.changeSize(10,10);
+        r2 = new Triangle();
+]]></codefragment>
+   </duplication>
+</pmd-cpd>

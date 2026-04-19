@@ -30,7 +30,7 @@ Proyecto/
 │   │   └── shapes/         # Capa gráfica: Canvas y figuras
 │   └── test/               # Pruebas de unidad y aceptación (JUnit)
 ├── target/
-│   ├── sites/             
+│   ├── site/             
 │       ├── JaCoCo/
 │       │    └──index.html          # Reporte de cobertura (análisis dinámico)
 │       └── pmd.html                # Reporte PMD (análisis estático)
